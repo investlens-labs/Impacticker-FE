@@ -34,6 +34,12 @@ NEXT_PUBLIC_NAVER_SITE_VERIFICATION=naver에서_발급한_값
 
 검증 코드는 공개 meta 값이며 비밀번호나 API Token이 아닙니다. 값이 없으면 해당 meta 태그를 출력하지 않습니다.
 
+## 이전 브랜드 주소 전환
+
+기존 `https://investlens.mandoo4137-a53.workers.dev` 주소는 별도의 경량 Worker에서 새 Impacticker origin으로 301 영구 리디렉션합니다. 요청 경로와 쿼리 문자열을 보존하므로 기존 검색 결과나 외부 링크의 신호가 새 주소로 일관되게 이전됩니다.
+
+리디렉션 Worker는 [`legacy-worker/index.ts`](../legacy-worker/index.ts)에 있으며 메인 운영 배포 직후 자동 배포됩니다. 운영 파이프라인은 리디렉션 상태 코드와 `Location` 헤더를 함께 검사합니다.
+
 ## 다국어 정책
 
 서비스 UI는 한국어, 영어, 일본어, 중국어를 지원하지만 현재 언어 선택은 `NEXT_LOCALE` 쿠키를 사용하는 동일 URL 구조입니다. 검색엔진의 `hreflang`은 언어별 고유 URL과 상호 참조가 필요하므로 존재하지 않는 언어 URL을 임의로 선언하지 않습니다. 언어별 검색 유입을 확대할 때는 `/ko`, `/en`, `/ja`, `/zh` 같은 고유 공개 URL을 별도 설계한 뒤 canonical과 sitemap을 함께 전환합니다.
