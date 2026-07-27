@@ -18,16 +18,16 @@ export function AppShell({ children }: { children: ReactNode }) {
   const t = useTranslations('nav')
   const common = useTranslations('common')
   const ads = useTranslations('ads')
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileMenuPath, setMobileMenuPath] = useState<string | null>(null)
   const [userOpen, setUserOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
+  const mobileOpen = mobileMenuPath === pathname
   const navItems = [
     { href: '/dashboard', label: t('dashboard'), icon: LayoutDashboard },
     { href: '/search', label: t('search'), icon: Search },
     { href: '/portfolio', label: t('portfolio'), icon: BriefcaseBusiness },
   ]
 
-  useEffect(() => setMobileOpen(false), [pathname])
   useEffect(() => {
     const close = (event: MouseEvent) => {
       if (!menuRef.current?.contains(event.target as Node)) setUserOpen(false)
@@ -40,7 +40,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="min-h-screen bg-slate-50 dark:bg-[#0d1211]">
       <header className="fixed inset-x-0 top-0 z-40 h-14 border-b border-slate-200/90 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95">
         <div className="flex h-full items-center px-4 lg:px-5">
-          <button className="mr-2 grid size-9 place-items-center rounded-lg text-slate-600 hover:bg-slate-100 lg:hidden dark:text-slate-300 dark:hover:bg-slate-800" onClick={() => setMobileOpen(true)} aria-label={t('openMenu')}>
+          <button className="mr-2 grid size-9 place-items-center rounded-lg text-slate-600 hover:bg-slate-100 lg:hidden dark:text-slate-300 dark:hover:bg-slate-800" onClick={() => setMobileMenuPath(pathname)} aria-label={t('openMenu')}>
             <Menu className="size-5" />
           </button>
           <Link href="/dashboard" className="flex items-center gap-2 font-bold tracking-tight text-slate-950 dark:text-white">
@@ -86,7 +86,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <aside className={`fixed bottom-0 left-0 top-14 z-30 w-60 border-r border-slate-200 bg-white p-3 transition-transform lg:translate-x-0 dark:border-slate-800 dark:bg-slate-950 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="mb-2 flex items-center justify-between px-2 lg:hidden">
           <span className="text-xs font-semibold text-slate-500">{t('menu')}</span>
-          <button onClick={() => setMobileOpen(false)} className="grid size-8 place-items-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" aria-label={t('closeMenu')}><X className="size-4" /></button>
+          <button onClick={() => setMobileMenuPath(null)} className="grid size-8 place-items-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" aria-label={t('closeMenu')}><X className="size-4" /></button>
         </div>
         <nav aria-label={t('mainMenu')} className="space-y-1">
           {navItems.map(({ href, label, icon: Icon }) => {
@@ -107,7 +107,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </div>
       </aside>
-      {mobileOpen && <button className="fixed inset-0 z-20 bg-slate-950/35 lg:hidden" onClick={() => setMobileOpen(false)} aria-label={t('closeMenu')} />}
+      {mobileOpen && <button className="fixed inset-0 z-20 bg-slate-950/35 lg:hidden" onClick={() => setMobileMenuPath(null)} aria-label={t('closeMenu')} />}
 
       <main id="main-content" className="min-h-screen pt-14 lg:pl-60">
         <div className="mx-auto w-full max-w-[1480px] p-4 sm:p-5 lg:p-6">{children}</div>

@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Check, ChevronRight, Plus, Search, SlidersHorizontal } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-import { useEffect, useState, type KeyboardEvent } from 'react'
+import { useState, type KeyboardEvent } from 'react'
 import { InstrumentLogo, LogoAttribution } from '@/components/instrument-logo'
 import { PageHeading } from '@/components/page-heading'
 import { Button } from '@/components/ui/button'
@@ -35,8 +35,6 @@ export default function SearchPage() {
   const portfolioIds = new Set(portfolio.data?.map((item) => item.instrumentId))
   const logoAttributionUrl = instruments.data?.find((item) => item.logoAttributionUrl)?.logoAttributionUrl ?? null
 
-  useEffect(() => setActiveIndex(-1), [debouncedKeyword, market, type])
-
   const handleSearchKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     const results = instruments.data ?? []
     if (!results.length) return
@@ -62,16 +60,16 @@ export default function SearchPage() {
         <div className="relative flex-1">
           <Search aria-hidden className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
           <label htmlFor="instrument-search" className="sr-only">{t('inputLabel')}</label>
-          <input id="instrument-search" className="field pl-9" value={keyword} onChange={(event) => setKeyword(event.target.value)} onKeyDown={handleSearchKeyDown} placeholder={t('placeholder')} autoComplete="off" aria-describedby="search-help" />
+          <input id="instrument-search" className="field pl-9" value={keyword} onChange={(event) => { setKeyword(event.target.value); setActiveIndex(-1) }} onKeyDown={handleSearchKeyDown} placeholder={t('placeholder')} autoComplete="off" aria-describedby="search-help" />
         </div>
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="size-4 text-slate-400" aria-hidden />
           <label htmlFor="instrument-market" className="sr-only">{t('market')}</label>
-          <select id="instrument-market" className="field min-w-28" value={market} onChange={(event) => setMarket(event.target.value as Market | '')}>
+          <select id="instrument-market" className="field min-w-28" value={market} onChange={(event) => { setMarket(event.target.value as Market | ''); setActiveIndex(-1) }}>
             <option value="">{t('allMarkets')}</option><option value="KR">{common('korea')}</option><option value="US">{common('unitedStates')}</option>
           </select>
           <label htmlFor="instrument-type" className="sr-only">{t('type')}</label>
-          <select id="instrument-type" className="field min-w-32" value={type} onChange={(event) => setType(event.target.value as InstrumentType | '')}>
+          <select id="instrument-type" className="field min-w-32" value={type} onChange={(event) => { setType(event.target.value as InstrumentType | ''); setActiveIndex(-1) }}>
             <option value="">{t('allTypes')}</option><option value="STOCK">{common('stock')}</option><option value="ETF">{common('etf')}</option>
           </select>
         </div>
