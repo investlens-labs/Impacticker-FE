@@ -6,7 +6,7 @@ import { getLocale, getTranslations } from 'next-intl/server'
 import logo from '@/app/icon.png'
 import { LocaleSwitcher } from '@/components/locale-switcher'
 import { MarketIntelligencePreview } from '@/components/landing/market-intelligence-preview'
-import { intlLocale } from '@/i18n/config'
+import { intlLocale, locales, type AppLocale } from '@/i18n/config'
 import { buildStructuredData, serializeJsonLd, siteName } from '@/lib/seo'
 
 const openGraphLocale = {
@@ -48,8 +48,12 @@ export default async function HomePage() {
   const auth = await getTranslations('auth')
   const landing = await getTranslations('landing')
   const metadata = await getTranslations('metadata')
-  const locale = await getLocale()
+  const localeText = await getTranslations('locale')
+  const locale = await getLocale() as AppLocale
   const structuredData = buildStructuredData(metadata('description'), intlLocale[locale])
+  const localeLabels = Object.fromEntries(
+    locales.map((item) => [item, localeText(item)]),
+  ) as Record<AppLocale, string>
   const features = [
     { icon: Newspaper, title: auth('point1'), description: landing('newsDescription') },
     { icon: BarChart3, title: auth('point2'), description: landing('analysisDescription') },
@@ -67,7 +71,13 @@ export default async function HomePage() {
             <span className="hidden text-lg sm:inline">Impacticker</span>
           </Link>
           <nav aria-label={landing('accountMenu')} className="ml-auto flex items-center gap-2">
-            <LocaleSwitcher compact />
+            <LocaleSwitcher
+              compact
+              currentLocale={locale}
+              label={localeText('label')}
+              changingLabel={localeText('changing')}
+              localeLabels={localeLabels}
+            />
             <Link href="/login" className="hidden h-9 items-center rounded-lg px-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 sm:inline-flex dark:text-slate-300 dark:hover:bg-slate-800">{auth('login')}</Link>
             <Link href="/signup" className="inline-flex h-9 items-center rounded-lg bg-brand-600 px-3.5 text-sm font-semibold text-white transition hover:bg-brand-700">{auth('signup')}</Link>
           </nav>

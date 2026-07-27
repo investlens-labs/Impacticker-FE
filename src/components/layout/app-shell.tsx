@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useAuth } from '@/components/providers/auth-provider'
 import { useTheme } from '@/components/providers/theme-provider'
-import { LocaleSwitcher } from '@/components/locale-switcher'
+import { LocalizedLocaleSwitcher } from '@/components/localized-locale-switcher'
 import logo from '@/app/icon.png'
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -47,7 +47,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="text-base">Impacticker</span>
           </Link>
           <div className="ml-auto flex items-center gap-1.5">
-            <div className="hidden sm:block"><LocaleSwitcher compact /></div>
+            <div className="hidden sm:block"><LocalizedLocaleSwitcher compact /></div>
             <button onClick={toggle} className="grid size-9 place-items-center rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800" aria-label={theme === 'light' ? t('useDarkMode') : t('useLightMode')}>
               {theme === 'light' ? <Moon className="size-4.5" /> : <Sun className="size-4.5" />}
             </button>
@@ -63,7 +63,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                     <p className="truncate text-xs font-semibold text-slate-900 dark:text-white">{user?.email}</p>
                     <p className="mt-0.5 text-[11px] text-slate-500">{user?.role === 'ADMIN' ? common('admin') : common('user')}</p>
                   </div>
-                  <div className="border-b border-slate-100 p-1.5 sm:hidden dark:border-slate-800"><LocaleSwitcher compact /></div>
+                  <div className="border-b border-slate-100 p-1.5 sm:hidden dark:border-slate-800"><LocalizedLocaleSwitcher compact /></div>
                   <button role="menuitem" onClick={signOut} className="mt-1 flex h-9 w-full items-center gap-2 rounded-lg px-2.5 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/50">
                     <LogOut className="size-4" />{t('logout')}
                   </button>

@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages } from 'next-intl/server'
 import type { ReactNode } from 'react'
 import { AppShell } from '@/components/layout/app-shell'
+import { AppProviders } from '@/components/providers/app-providers'
 
 export const metadata: Metadata = {
   robots: {
@@ -11,6 +14,15 @@ export const metadata: Metadata = {
   },
 }
 
-export default function AuthenticatedLayout({ children }: { children: ReactNode }) {
-  return <AppShell>{children}</AppShell>
+export default async function AuthenticatedLayout({ children }: { children: ReactNode }) {
+  const locale = await getLocale()
+  const messages = await getMessages()
+
+  return (
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <AppProviders>
+        <AppShell>{children}</AppShell>
+      </AppProviders>
+    </NextIntlClientProvider>
+  )
 }
