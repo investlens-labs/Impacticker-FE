@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import type { InstrumentNewsSentiment } from '@/lib/api/types'
 import { renderWithIntl } from '@/test/render'
@@ -25,6 +25,18 @@ describe('InstrumentSentiment', () => {
     expect(screen.getByText('30%')).toBeInTheDocument()
     expect(screen.getByText('AI · gemini-3.5-flash')).toBeInTheDocument()
     expect(screen.getByText(analyzedSentiment.disclaimer)).toBeInTheDocument()
+
+    const upMetric = screen.getByText('상승').closest('div')
+    const downMetric = screen.getByText('하락').closest('div')
+    const neutralMetric = screen.getByText('중립').closest('div')
+
+    expect(upMetric).not.toBeNull()
+    expect(downMetric).not.toBeNull()
+    expect(neutralMetric).not.toBeNull()
+    expect(within(upMetric as HTMLElement).getByText('48%')).toBeInTheDocument()
+    expect(within(downMetric as HTMLElement).getByText('22%')).toBeInTheDocument()
+    expect(within(neutralMetric as HTMLElement).getByText('30%')).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: '상승 48%, 하락 22%, 중립 30%' })).toBeInTheDocument()
   })
 
   it('AI 미분석 상태의 0을 실제 확률로 표시하지 않는다', () => {
