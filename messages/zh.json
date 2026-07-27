@@ -99,7 +99,13 @@
     "hidePassword": "隐藏密码",
     "passwordHelp": "建议使用字母与数字组合，长度为8–72个字符。",
     "duplicateEmail": "该邮箱已注册。",
-    "requestFailed": "请求处理失败。",
+    "invalidCredentials": "邮箱或密码不正确。",
+    "invalidSignup": "请检查输入内容。密码长度应为8–72个字符。",
+    "networkError": "请检查网络连接后重试。",
+    "timeoutError": "服务器响应较慢，请稍后重试。",
+    "rateLimitError": "当前登录请求较多，请稍后重试。",
+    "serverError": "登录服务暂时不可用，请稍后重试。",
+    "requestFailed": "无法完成登录，请稍后重试。",
     "creating": "正在创建账户",
     "loggingIn": "正在登录",
     "createAccount": "创建账户",
@@ -308,6 +314,43 @@
     "coldStart": "免费服务器唤醒可能需要最多1分钟。",
     "errorTitle": "无法加载信息",
     "errorDescription": "请稍后重试；若问题持续，请检查网络连接。",
+    "errors": {
+      "network": {
+        "title": "请检查网络连接",
+        "description": "网络可能已断开或不稳定，请恢复连接后重试。",
+        "inline": "请检查网络连接后重试。"
+      },
+      "timeout": {
+        "title": "响应时间比平时更长",
+        "description": "服务器仍在准备数据，请稍等片刻后重试。",
+        "inline": "服务器响应较慢，请稍后重试。"
+      },
+      "rateLimit": {
+        "title": "当前请求较多",
+        "description": "请稍等片刻后重试。",
+        "inline": "当前请求较多，请稍后重试。"
+      },
+      "server": {
+        "title": "服务暂时无法连接",
+        "description": "服务器可能正在启动或暂时无响应，请稍后重试。",
+        "inline": "服务暂时无法连接，请稍后重试。"
+      },
+      "forbidden": {
+        "title": "无法执行此操作",
+        "description": "当前账户没有访问此信息的权限。",
+        "inline": "当前账户没有执行此操作的权限。"
+      },
+      "unauthorized": {
+        "title": "登录已过期",
+        "description": "为了保护账户安全，即将前往登录页面。请重新登录。",
+        "inline": "登录已过期，请重新登录。"
+      },
+      "generic": {
+        "title": "无法加载信息",
+        "description": "这可能是暂时性问题，请重试。",
+        "inline": "无法完成操作，请重试。"
+      }
+    },
     "appLoading": "正在准备Impacticker...",
     "unexpectedTitle": "发生意外错误",
     "unexpectedDescription": "您的操作内容已安全保留，请刷新页面尝试恢复。",

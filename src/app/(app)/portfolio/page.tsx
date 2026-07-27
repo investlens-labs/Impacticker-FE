@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useFormatter, useTranslations } from 'next-intl'
 import { PageHeading } from '@/components/page-heading'
 import { Button } from '@/components/ui/button'
-import { ErrorState, LoadingState, StatusState } from '@/components/ui/status-state'
+import { ErrorNotice, ErrorState, LoadingState, StatusState } from '@/components/ui/status-state'
 import { portfolioApi } from '@/lib/api/services'
 import { queryKeys } from '@/lib/query-keys'
 
@@ -28,7 +28,7 @@ export default function PortfolioPage() {
     <>
       <PageHeading eyebrow={t('eyebrow')} title={t('title')} description={t('description')} action={<Link href="/search"><Button icon={Plus}>{t('addInstrument')}</Button></Link>} />
       {portfolio.isLoading ? <LoadingState label={t('loading')} />
-        : portfolio.isError ? <ErrorState onRetry={() => void portfolio.refetch()} />
+        : portfolio.isError ? <ErrorState error={portfolio.error} retrying={portfolio.isFetching} onRetry={() => void portfolio.refetch()} />
         : !portfolio.data?.length ? <StatusState title={t('emptyTitle')} description={t('emptyDescription')} actionLabel={t('addFirst')} onAction={() => { window.location.href = '/search' }} />
         : (
           <div className="surface overflow-hidden">
@@ -55,7 +55,7 @@ export default function PortfolioPage() {
             </ul>
           </div>
         )}
-      {removeMutation.isError && <p role="alert" className="mt-3 text-sm text-red-600">{t('deleteFailed')}</p>}
+      {removeMutation.isError && <ErrorNotice className="mt-3" error={removeMutation.error} fallback={t('deleteFailed')} />}
     </>
   )
 }

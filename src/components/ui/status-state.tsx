@@ -1,7 +1,18 @@
 'use client'
 
-import { AlertTriangle, Inbox, LoaderCircle, RefreshCw, type LucideIcon } from 'lucide-react'
+import {
+  AlertTriangle,
+  Clock3,
+  Inbox,
+  LoaderCircle,
+  RefreshCw,
+  ServerCrash,
+  ShieldAlert,
+  WifiOff,
+  type LucideIcon,
+} from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { getApiErrorKind, type ApiErrorKind } from '@/lib/api/error-feedback'
 import { Button } from './button'
 
 interface StatusStateProps {
@@ -10,10 +21,17 @@ interface StatusStateProps {
   icon?: LucideIcon
   actionLabel?: string
   onAction?: () => void
+  actionPending?: boolean
   compact?: boolean
 }
 
-export function StatusState({ title, description, icon: Icon = Inbox, actionLabel, onAction, compact }: StatusStateProps) {
+interface ErrorNoticeProps {
+  error: unknown
+  fallback: string
+  className?: string
+}
+
+export function StatusState({ title, description, icon: Icon = Inbox, actionLabel, onAction, actionPending, compact }: StatusStateProps) {
   return (
     <div className={`surface flex flex-col items-center justify-center text-center ${compact ? 'min-h-44 p-5' : 'min-h-72 p-8'}`}>
       <span className="mb-3 grid size-10 place-items-center rounded-full bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
@@ -21,7 +39,7 @@ export function StatusState({ title, description, icon: Icon = Inbox, actionLabe
       </span>
       <h2 className="text-base font-semibold text-slate-900 dark:text-white">{title}</h2>
       <p className="mt-1 max-w-md text-sm leading-6 text-slate-500 dark:text-slate-400">{description}</p>
-      {actionLabel && onAction && <Button className="mt-4" variant="secondary" icon={RefreshCw} onClick={onAction}>{actionLabel}</Button>}
+      {actionLabel && onAction && <Button className="mt-4" variant="secondary" icon={RefreshCw} loading={actionPending} disabled={actionPending} onClick={onAction}>{actionLabel}</Button>}
     </div>
   )
 }
@@ -37,8 +55,44 @@ export function LoadingState({ label }: { label?: string }) {
   )
 }
 
-export function ErrorState({ onRetry }: { onRetry: () => void }) {
+const errorIcons: Record<ApiErrorKind, LucideIcon> = {
+  network: WifiOff,
+  timeout: Clock3,
+  rateLimit: Clock3,
+  server: ServerCrash,
+  forbidden: ShieldAlert,
+  unauthorized: ShieldAlert,
+  generic: AlertTriangle,
+}
+
+export function ErrorState({ error, onRetry, retrying, compact }: { error?: unknown; onRetry: () => void; retrying?: boolean; compact?: boolean }) {
   const t = useTranslations('status')
   const common = useTranslations('common')
-  return <StatusState title={t('errorTitle')} description={t('errorDescription')} icon={AlertTriangle} actionLabel={common('retry')} onAction={onRetry} />
+  const kind = getApiErrorKind(error)
+  return (
+    <StatusState
+      compact={compact}
+      title={t(`errors.${kind}.title`)}
+      description={t(`errors.${kind}.description`)}
+      icon={errorIcons[kind]}
+      actionLabel={common('retry')}
+      onAction={onRetry}
+      actionPending={retrying}
+    />
+  )
+}
+
+export function ErrorNotice({ error, fallback, className = '' }: ErrorNoticeProps) {
+  const t = useTranslations('status')
+  const kind = getApiErrorKind(error)
+  const message = kind === 'generic' ? fallback : t(`errors.${kind}.inline`)
+
+  return (
+    <p
+      role="alert"
+      className={`rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm leading-5 text-red-700 dark:border-red-900 dark:bg-red-950/50 dark:text-red-300 ${className}`}
+    >
+      {message}
+    </p>
+  )
 }

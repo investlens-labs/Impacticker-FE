@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { NewsFeed } from '@/components/news-feed'
 import { PageHeading } from '@/components/page-heading'
+import { ErrorState } from '@/components/ui/status-state'
 import { portfolioApi } from '@/lib/api/services'
 import { queryKeys } from '@/lib/query-keys'
 
@@ -18,7 +19,7 @@ export default function DashboardPage() {
     <>
       <PageHeading eyebrow={t('eyebrow')} title={t('title')} description={t('description')} />
       <section className="mb-5 grid grid-cols-2 gap-3 xl:grid-cols-4" aria-label={t('summaryMetrics')}>
-        <SummaryCard icon={BriefcaseBusiness} label={t('watchlist')} value={portfolio.isLoading ? '—' : common('items', { count: portfolio.data?.length ?? 0 })} sub={t('portfolioBasis')} />
+        <SummaryCard icon={BriefcaseBusiness} label={t('watchlist')} value={portfolio.isLoading || portfolio.isError ? '—' : common('items', { count: portfolio.data?.length ?? 0 })} sub={t('portfolioBasis')} />
         <SummaryCard icon={Newspaper} label={t('newsAnalysis')} value={t('realtime')} sub={t('directionScore')} />
         <SummaryCard icon={ShieldCheck} label={t('analysisRange')} value={t('rangeValue')} sub={t('impactPotential')} />
         <Link href="/search" className="surface group flex min-h-24 items-center gap-3 p-4 transition hover:border-brand-500/40">
@@ -34,6 +35,7 @@ export default function DashboardPage() {
           </div>
           <div className="p-2">
             {portfolio.isLoading ? <p className="p-3 text-xs text-slate-500">{t('loadingInstruments')}</p>
+              : portfolio.isError ? <ErrorState compact error={portfolio.error} retrying={portfolio.isFetching} onRetry={() => void portfolio.refetch()} />
               : portfolio.data?.length ? portfolio.data.slice(0, 7).map((item) => (
                 <Link key={item.id} href={`/instruments/${item.instrumentId}`} className="group flex items-center gap-3 rounded-lg px-2.5 py-2 transition hover:bg-brand-50/80 dark:hover:bg-brand-700/15">
                   <span className="grid size-8 shrink-0 place-items-center rounded-md bg-slate-100 font-mono text-xs font-bold text-slate-800 dark:bg-slate-800 dark:text-slate-100">{item.ticker.slice(0, 4)}</span>

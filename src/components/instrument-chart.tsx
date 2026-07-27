@@ -15,6 +15,7 @@ import { AlertTriangle, Clock3, RefreshCw } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTheme } from '@/components/providers/theme-provider'
+import { getApiErrorKind } from '@/lib/api/error-feedback'
 import { instrumentApi } from '@/lib/api/services'
 import type { ChartRange, InstrumentChart as InstrumentChartData } from '@/lib/api/types'
 import { toLineData, toVolumeData } from '@/lib/chart-data'
@@ -54,7 +55,7 @@ export function InstrumentChart({ instrumentId }: { instrumentId: string }) {
 
       <div className="relative px-2 pb-3 sm:px-3">
         {chart.isLoading ? <ChartSkeleton />
-          : chart.isError ? <ChartError onRetry={() => void chart.refetch()} />
+          : chart.isError ? <ChartError error={chart.error} retrying={chart.isFetching} onRetry={() => void chart.refetch()} />
           : !chart.data?.points.length ? <ChartEmpty />
           : <PriceVolumeChart data={chart.data} dimmed={chart.isFetching} />}
       </div>
@@ -169,10 +170,11 @@ function ChartSkeleton() {
   return <div className="h-[360px] animate-pulse space-y-4 px-3 py-8 sm:h-[430px]" role="status" aria-label={t('loadingAria')}><div className="h-4 w-32 rounded bg-slate-200 dark:bg-slate-800" /><div className="h-[70%] rounded-lg bg-slate-100 dark:bg-slate-800/70" /><div className="h-[12%] rounded-lg bg-slate-100 dark:bg-slate-800/70" /><p className="text-center text-xs text-slate-500">{t('loadingDescription')}</p></div>
 }
 
-function ChartError({ onRetry }: { onRetry: () => void }) {
-  const t = useTranslations('chart')
+function ChartError({ error, onRetry, retrying }: { error: unknown; onRetry: () => void; retrying: boolean }) {
+  const t = useTranslations('status')
   const common = useTranslations('common')
-  return <div className="flex h-[360px] flex-col items-center justify-center text-center sm:h-[430px]"><AlertTriangle className="size-6 text-amber-500" /><p className="mt-3 text-sm font-semibold text-slate-800 dark:text-slate-200">{t('errorTitle')}</p><p className="mt-1 text-xs text-slate-500">{t('errorDescription')}</p><button onClick={onRetry} className="mt-3 inline-flex h-9 items-center gap-1.5 rounded-lg border border-slate-300 px-3 text-xs font-semibold hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800"><RefreshCw className="size-3.5" />{common('retry')}</button></div>
+  const kind = getApiErrorKind(error)
+  return <div className="flex h-[360px] flex-col items-center justify-center text-center sm:h-[430px]"><AlertTriangle className="size-6 text-amber-500" /><p className="mt-3 text-sm font-semibold text-slate-800 dark:text-slate-200">{t(`errors.${kind}.title`)}</p><p className="mt-1 max-w-md text-xs leading-5 text-slate-500">{t(`errors.${kind}.description`)}</p><button onClick={onRetry} disabled={retrying} className="mt-3 inline-flex h-9 items-center gap-1.5 rounded-lg border border-slate-300 px-3 text-xs font-semibold hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:hover:bg-slate-800"><RefreshCw className={`size-3.5 ${retrying ? 'animate-spin' : ''}`} />{common('retry')}</button></div>
 }
 
 function ChartEmpty() {

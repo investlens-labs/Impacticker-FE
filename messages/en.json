@@ -99,7 +99,13 @@
     "hidePassword": "Hide password",
     "passwordHelp": "Use 8–72 characters. A combination of letters and numbers is recommended.",
     "duplicateEmail": "An account with this email already exists.",
-    "requestFailed": "We couldn't process your request.",
+    "invalidCredentials": "The email or password is incorrect.",
+    "invalidSignup": "Check your details. Your password must be 8–72 characters.",
+    "networkError": "Check your internet connection, then try again.",
+    "timeoutError": "The server is taking longer than expected. Please try again shortly.",
+    "rateLimitError": "There are too many sign-in attempts right now. Please wait and try again.",
+    "serverError": "Sign-in is temporarily unavailable. Please try again shortly.",
+    "requestFailed": "We couldn't complete sign-in. Please try again shortly.",
     "creating": "Creating your account",
     "loggingIn": "Signing in",
     "createAccount": "Create account",
@@ -308,6 +314,43 @@
     "coldStart": "The free server may take up to a minute to wake up.",
     "errorTitle": "Unable to load information",
     "errorDescription": "Please try again shortly. If the problem continues, check your network connection.",
+    "errors": {
+      "network": {
+        "title": "Check your internet connection",
+        "description": "Your connection appears to be offline or unstable. Reconnect, then try again.",
+        "inline": "Check your internet connection, then try again."
+      },
+      "timeout": {
+        "title": "This is taking longer than usual",
+        "description": "The server is still preparing the data. Wait a moment, then try again.",
+        "inline": "The server is taking longer than expected. Please try again shortly."
+      },
+      "rateLimit": {
+        "title": "Too many requests right now",
+        "description": "Wait a moment and try again.",
+        "inline": "There are too many requests right now. Please wait and try again."
+      },
+      "server": {
+        "title": "The service is temporarily unavailable",
+        "description": "The server may be starting or temporarily unavailable. Please try again shortly.",
+        "inline": "The service is temporarily unavailable. Please try again shortly."
+      },
+      "forbidden": {
+        "title": "You can't access this",
+        "description": "Your account does not have permission to view this information.",
+        "inline": "Your account does not have permission to complete this action."
+      },
+      "unauthorized": {
+        "title": "Your session has expired",
+        "description": "For your security, we're taking you to sign in. Please sign in again.",
+        "inline": "Your session has expired. Please sign in again."
+      },
+      "generic": {
+        "title": "We couldn't load this information",
+        "description": "This may be a temporary issue. Please try again.",
+        "inline": "We couldn't complete that action. Please try again."
+      }
+    },
     "appLoading": "Preparing Impacticker...",
     "unexpectedTitle": "An unexpected error occurred",
     "unexpectedDescription": "Your work is safe. Reload the page to recover.",
