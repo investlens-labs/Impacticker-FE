@@ -16,6 +16,47 @@
     "admin": "管理员",
     "user": "普通用户"
   },
+  "ads": {
+    "label": "广告",
+    "privacy": "隐私与Cookie",
+    "policy": "广告运营政策"
+  },
+  "legal": {
+    "eyebrow": "服务运营政策",
+    "updated": "最后更新",
+    "backHome": "返回首页",
+    "privacy": {
+      "title": "隐私与Cookie说明",
+      "description": "本说明介绍Impacticker为提供服务和运营广告而使用的信息，以及用户可做出的选择。",
+      "accountTitle": "账户与服务数据",
+      "accountContent": "登录所需的邮箱和认证信息，以及用户保存的关注证券，会用于提供服务功能。认证令牌存储在用户设备上，仅用于API请求认证。",
+      "preferencesTitle": "设备存储信息",
+      "preferencesContent": "我们可能使用Cookie或浏览器存储来保存显示语言和主题等用户设置。",
+      "advertisingTitle": "广告与第三方服务",
+      "advertisingContent": "广告功能启用后，包括Google在内的第三方广告服务商可能使用Cookie及类似技术进行广告投放、频次管理、汇总报告和欺诈防范。Impacticker默认请求非个性化广告。",
+      "targetingTitle": "保护投资组合信息",
+      "targetingContent": "我们不会使用用户的持仓、关注证券或新闻阅读记录建立广告受众，也不会将这些信息直接提供给广告服务商。",
+      "choicesTitle": "用户选择",
+      "choicesContent": "用户可以在Google广告设置中查看广告个性化选项。在当地法规要求同意的地区，我们会提供Google认证的同意管理界面。",
+      "googleSettings": "Google广告设置",
+      "contactTitle": "隐私咨询",
+      "contactPending": "启用广告功能前，我们会在此页面公布专用的隐私咨询邮箱。"
+    },
+    "advertising": {
+      "title": "广告运营政策",
+      "description": "这些原则用于分离广告收入与新闻分析，并确保用户能够清楚识别广告。",
+      "labelTitle": "清晰的广告标识",
+      "labelContent": "付费广告和赞助内容会在临近位置清楚标注为广告或赞助内容。",
+      "independenceTitle": "分析独立性",
+      "independenceContent": "广告合作不会影响新闻收集、AI影响方向、影响分数、概率或评估理由。",
+      "placementTitle": "克制的广告位置",
+      "placementContent": "登录、错误、加载页面以及投资组合添加和删除控件附近不会展示广告。广告仅出现在不妨碍内容使用的指定区域。",
+      "prohibitedTitle": "禁止的广告",
+      "prohibitedContent": "我们不允许保证收益、虚假或夸大投资表现、推广非法金融产品或误导用户的广告。",
+      "personalizationTitle": "限制广告个性化",
+      "personalizationContent": "Impacticker不会将投资组合数据用于广告定向，并默认向Google请求非个性化广告。"
+    }
+  },
   "metadata": {
     "homeTitle": "Impacticker | AI投资新闻影响分析",
     "description": "分析韩国和美国股票及ETF的重要新闻，并根据您的投资组合查看影响方向和1至10分评分。",

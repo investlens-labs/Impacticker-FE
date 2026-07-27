@@ -16,6 +16,47 @@
     "admin": "Administrator",
     "user": "User"
   },
+  "ads": {
+    "label": "Advertisement",
+    "privacy": "Privacy and cookies",
+    "policy": "Advertising policy"
+  },
+  "legal": {
+    "eyebrow": "Service policies",
+    "updated": "Last updated",
+    "backHome": "Back to home",
+    "privacy": {
+      "title": "Privacy and cookie notice",
+      "description": "This notice explains the information Impacticker uses to provide the service and operate advertising, along with your choices.",
+      "accountTitle": "Account and service data",
+      "accountContent": "Your email, authentication information, and saved instruments are processed to provide service features. The authentication token is stored on your device and used only to authenticate API requests.",
+      "preferencesTitle": "Information stored on your device",
+      "preferencesContent": "Cookies or browser storage may be used to remember preferences such as your display language and theme.",
+      "advertisingTitle": "Advertising and third-party services",
+      "advertisingContent": "When advertising is enabled, third-party advertising providers, including Google, may use cookies and similar technologies for ad delivery, frequency management, aggregate reporting, and fraud prevention. Impacticker requests non-personalized ads by default.",
+      "targetingTitle": "Protecting portfolio information",
+      "targetingContent": "We do not use your holdings, watchlist, or news reading history to create advertising audiences or directly send this information to advertising providers.",
+      "choicesTitle": "Your choices",
+      "choicesContent": "You can review ad personalization settings in Google Ads Settings. Where regional consent is required, we provide Google's certified consent management experience.",
+      "googleSettings": "Google Ads Settings",
+      "contactTitle": "Privacy contact",
+      "contactPending": "A dedicated privacy contact email will be published here before advertising is enabled."
+    },
+    "advertising": {
+      "title": "Advertising policy",
+      "description": "These principles separate advertising revenue from news analysis and ensure that users can clearly identify advertising.",
+      "labelTitle": "Clear advertising labels",
+      "labelContent": "Paid advertisements and sponsored content are clearly labeled as advertisements or sponsorships near the content.",
+      "independenceTitle": "Editorial and analytical independence",
+      "independenceContent": "Advertising agreements do not affect news collection, AI impact direction, impact scores, probabilities, or assessment reasons.",
+      "placementTitle": "Limited placement",
+      "placementContent": "Ads are not placed on sign-in, error, or loading screens, or near portfolio add and remove controls. Ads only appear in designated areas that do not interfere with content.",
+      "prohibitedTitle": "Prohibited advertising",
+      "prohibitedContent": "We do not allow ads that guarantee returns, make false or exaggerated performance claims, promote illegal financial products, or mislead users.",
+      "personalizationTitle": "Limited ad personalization",
+      "personalizationContent": "Impacticker does not use portfolio data for advertising targeting and requests non-personalized Google ads by default."
+    }
+  },
   "metadata": {
     "homeTitle": "Impacticker | AI Investment News Impact Analysis",
     "description": "Analyze key news for South Korean and U.S. stocks and ETFs, then review portfolio-specific impact direction and scores from 1 to 10.",

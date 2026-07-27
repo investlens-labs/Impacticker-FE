@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { ArrowRight, BriefcaseBusiness, Newspaper, Search, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import { AdSlot } from '@/components/ads/ad-slot'
 import { NewsFeed } from '@/components/news-feed'
 import { PageHeading } from '@/components/page-heading'
 import { ErrorState } from '@/components/ui/status-state'
@@ -13,6 +14,7 @@ import { queryKeys } from '@/lib/query-keys'
 export default function DashboardPage() {
   const t = useTranslations('dashboard')
   const common = useTranslations('common')
+  const ads = useTranslations('ads')
   const portfolio = useQuery({ queryKey: queryKeys.portfolio, queryFn: portfolioApi.list })
 
   return (
@@ -29,22 +31,32 @@ export default function DashboardPage() {
       </section>
       <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
         <NewsFeed />
-        <aside className="surface overflow-hidden xl:sticky xl:top-20">
-          <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3 dark:border-slate-800">
-            <h2 className="text-sm font-semibold text-slate-900 dark:text-white">{t('myPortfolio')}</h2><Link href="/portfolio" className="text-xs font-semibold text-brand-600 hover:underline">{t('manage')}</Link>
-          </div>
-          <div className="p-2">
-            {portfolio.isLoading ? <p className="p-3 text-xs text-slate-500">{t('loadingInstruments')}</p>
-              : portfolio.isError ? <ErrorState compact error={portfolio.error} retrying={portfolio.isFetching} onRetry={() => void portfolio.refetch()} />
-              : portfolio.data?.length ? portfolio.data.slice(0, 7).map((item) => (
-                <Link key={item.id} href={`/instruments/${item.instrumentId}`} className="group flex items-center gap-3 rounded-lg px-2.5 py-2 transition hover:bg-brand-50/80 dark:hover:bg-brand-700/15">
-                  <span className="grid size-8 shrink-0 place-items-center rounded-md bg-slate-100 font-mono text-xs font-bold text-slate-800 dark:bg-slate-800 dark:text-slate-100">{item.ticker.slice(0, 4)}</span>
-                  <span className="min-w-0"><strong className="block text-xs text-slate-900 group-hover:underline dark:text-white">{item.ticker}</strong><span className="block truncate text-[11px] text-slate-500 group-hover:underline">{item.companyName}</span></span>
-                  <span className="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500 dark:bg-slate-800">{item.type}</span>
-                </Link>
-              )) : <div className="p-4 text-center"><p className="text-sm font-medium text-slate-800 dark:text-slate-200">{t('emptyTitle')}</p><p className="mt-1 text-xs leading-5 text-slate-500">{t('emptyDescription')}</p><Link href="/search" className="mt-3 inline-flex text-xs font-semibold text-brand-600 hover:underline">{t('addFirst')}</Link></div>}
-          </div>
-        </aside>
+        <div className="grid gap-4 xl:sticky xl:top-20">
+          <aside className="surface overflow-hidden">
+            <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3 dark:border-slate-800">
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-white">{t('myPortfolio')}</h2><Link href="/portfolio" className="text-xs font-semibold text-brand-600 hover:underline">{t('manage')}</Link>
+            </div>
+            <div className="p-2">
+              {portfolio.isLoading ? <p className="p-3 text-xs text-slate-500">{t('loadingInstruments')}</p>
+                : portfolio.isError ? <ErrorState compact error={portfolio.error} retrying={portfolio.isFetching} onRetry={() => void portfolio.refetch()} />
+                : portfolio.data?.length ? portfolio.data.slice(0, 7).map((item) => (
+                  <Link key={item.id} href={`/instruments/${item.instrumentId}`} className="group flex items-center gap-3 rounded-lg px-2.5 py-2 transition hover:bg-brand-50/80 dark:hover:bg-brand-700/15">
+                    <span className="grid size-8 shrink-0 place-items-center rounded-md bg-slate-100 font-mono text-xs font-bold text-slate-800 dark:bg-slate-800 dark:text-slate-100">{item.ticker.slice(0, 4)}</span>
+                    <span className="min-w-0"><strong className="block text-xs text-slate-900 group-hover:underline dark:text-white">{item.ticker}</strong><span className="block truncate text-[11px] text-slate-500 group-hover:underline">{item.companyName}</span></span>
+                    <span className="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500 dark:bg-slate-800">{item.type}</span>
+                  </Link>
+                )) : <div className="p-4 text-center"><p className="text-sm font-medium text-slate-800 dark:text-slate-200">{t('emptyTitle')}</p><p className="mt-1 text-xs leading-5 text-slate-500">{t('emptyDescription')}</p><Link href="/search" className="mt-3 inline-flex text-xs font-semibold text-brand-600 hover:underline">{t('addFirst')}</Link></div>}
+            </div>
+          </aside>
+          <AdSlot
+            enabled={process.env.NEXT_PUBLIC_ADSENSE_ENABLED}
+            clientId={process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}
+            slot={process.env.NEXT_PUBLIC_ADSENSE_DASHBOARD_SLOT}
+            privacyContact={process.env.NEXT_PUBLIC_PRIVACY_CONTACT_EMAIL}
+            label={ads('label')}
+            minHeight={180}
+          />
+        </div>
       </div>
     </>
   )

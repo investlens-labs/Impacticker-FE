@@ -4,6 +4,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { getLocale, getTranslations } from 'next-intl/server'
 import logo from '@/app/icon.png'
+import { AdSlot } from '@/components/ads/ad-slot'
 import { LocaleSwitcher } from '@/components/locale-switcher'
 import { MarketIntelligencePreview } from '@/components/landing/market-intelligence-preview'
 import { intlLocale, locales, type AppLocale } from '@/i18n/config'
@@ -48,6 +49,7 @@ export default async function HomePage() {
   const auth = await getTranslations('auth')
   const landing = await getTranslations('landing')
   const metadata = await getTranslations('metadata')
+  const ads = await getTranslations('ads')
   const localeText = await getTranslations('locale')
   const locale = await getLocale() as AppLocale
   const structuredData = buildStructuredData(metadata('description'), intlLocale[locale])
@@ -140,6 +142,17 @@ export default async function HomePage() {
           </div>
         </section>
 
+        <div className="mx-auto max-w-6xl px-4 pb-14 sm:px-5">
+          <AdSlot
+            enabled={process.env.NEXT_PUBLIC_ADSENSE_ENABLED}
+            clientId={process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}
+            slot={process.env.NEXT_PUBLIC_ADSENSE_LANDING_SLOT}
+            privacyContact={process.env.NEXT_PUBLIC_PRIVACY_CONTACT_EMAIL}
+            label={ads('label')}
+            minHeight={90}
+          />
+        </div>
+
         <section aria-labelledby="markets-title" className="border-y border-slate-200 bg-slate-50/80 dark:border-slate-800 dark:bg-slate-950/40">
           <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-5 lg:grid-cols-[0.8fr_1.2fr] lg:py-16">
             <div>
@@ -169,6 +182,11 @@ export default async function HomePage() {
 
       <footer className="border-t border-slate-200 px-5 py-6 text-center text-xs leading-5 text-slate-500 dark:border-slate-800">
         <p className="inline-flex items-center gap-1.5"><BriefcaseBusiness className="size-3.5" />{auth('disclaimer')}</p>
+        <nav className="mt-2 flex items-center justify-center gap-3">
+          <Link href="/privacy" className="hover:text-slate-800 hover:underline dark:hover:text-slate-200">{ads('privacy')}</Link>
+          <span aria-hidden>·</span>
+          <Link href="/advertising-policy" className="hover:text-slate-800 hover:underline dark:hover:text-slate-200">{ads('policy')}</Link>
+        </nav>
         <p className="mt-1">© {new Date().getFullYear()} Impacticker</p>
       </footer>
     </div>
