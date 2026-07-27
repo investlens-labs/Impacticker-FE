@@ -1,6 +1,5 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { renderWithIntl } from '@/test/render'
 import { LocaleSwitcher } from './locale-switcher'
 
 const refresh = vi.hoisted(() => vi.fn())
@@ -9,6 +8,18 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ refresh }),
 }))
 
+const localeSwitcherProps = {
+  currentLocale: 'ko' as const,
+  label: '화면 언어',
+  changingLabel: '언어 변경 중',
+  localeLabels: {
+    ko: '한국어',
+    en: 'English',
+    ja: '日本語',
+    zh: '中文',
+  },
+}
+
 describe('LocaleSwitcher', () => {
   afterEach(() => {
     refresh.mockClear()
@@ -16,7 +27,7 @@ describe('LocaleSwitcher', () => {
   })
 
   it('지원하는 네 언어를 모두 표시한다', () => {
-    renderWithIntl(<LocaleSwitcher />, { locale: 'ko' })
+    render(<LocaleSwitcher {...localeSwitcherProps} />)
 
     const select = screen.getByRole('combobox', { name: '화면 언어' })
     expect(select).toHaveValue('ko')
@@ -32,7 +43,7 @@ describe('LocaleSwitcher', () => {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     }))
-    renderWithIntl(<LocaleSwitcher />, { locale: 'ko' })
+    render(<LocaleSwitcher {...localeSwitcherProps} />)
 
     fireEvent.change(screen.getByRole('combobox', { name: '화면 언어' }), { target: { value: 'ja' } })
 
