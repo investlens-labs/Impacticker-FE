@@ -31,6 +31,16 @@ master push  → install → lint → typecheck → test → OpenNext build → 
 
 API Token은 최소 권한 원칙에 따라 대상 계정의 Workers Scripts 편집 권한만 부여합니다. 비밀값은 워크플로 전체가 아니라 배포 단계에만 전달되며 Pull Request 검증에는 노출되지 않습니다.
 
+## GitHub Actions 공개 변수
+
+저장소의 **Settings → Secrets and variables → Actions → Variables**에는 빌드 시 공개되어도 되는 설정을 저장합니다.
+
+| 이름 | 용도 |
+|---|---|
+| `NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN` | Cloudflare Web Analytics 비콘과 운영 스모크 검증 |
+
+사이트 토큰은 브라우저 HTML에 포함되는 공개 식별자입니다. 실제 Cloudflare API 인증 토큰은 반드시 별도의 secret으로 유지합니다.
+
 ## 배포 운영 규칙
 
 Cloudflare의 Git 저장소 자동 배포와 GitHub Actions 배포를 동시에 활성화하면 같은 커밋이 중복 배포될 수 있습니다. 이 저장소에서는 GitHub Actions만 자동 배포 주체로 사용하고 Cloudflare Workers Builds의 자동 배포는 비활성화합니다.

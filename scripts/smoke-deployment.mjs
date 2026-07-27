@@ -1,6 +1,7 @@
 const targetUrl = process.env.SMOKE_URL ?? "https://impacticker.mandoo4137-a53.workers.dev/";
 const attempts = Number(process.env.SMOKE_ATTEMPTS ?? 8);
 const delayMs = Number(process.env.SMOKE_DELAY_MS ?? 5_000);
+const analyticsToken = process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim();
 
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
@@ -28,6 +29,16 @@ async function verifyDeployment() {
 
   if (!homeReady) {
     return { ok: false, message: `${homeResponse.status} ${homeResponse.url}, expected SEO-ready Impacticker HTML` };
+  }
+
+  if (
+    analyticsToken
+    && (
+      !homeBody.includes("https://static.cloudflareinsights.com/beacon.min.js")
+      || !homeBody.includes(analyticsToken)
+    )
+  ) {
+    return { ok: false, message: `${homeResponse.status} ${homeResponse.url}, Cloudflare Web Analytics beacon missing` };
   }
 
   const textChecks = [
