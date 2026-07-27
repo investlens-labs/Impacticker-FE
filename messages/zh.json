@@ -1,6 +1,6 @@
 {
   "common": {
-    "brand": "InvestLens",
+    "brand": "Impacticker",
     "retry": "重试",
     "previous": "上一页",
     "next": "下一页",
@@ -17,13 +17,13 @@
     "user": "普通用户"
   },
   "metadata": {
-    "homeTitle": "InvestLens | AI投资新闻影响分析",
+    "homeTitle": "Impacticker | AI投资新闻影响分析",
     "description": "分析韩国和美国股票及ETF的重要新闻，并根据您的投资组合查看影响方向和1至10分评分。",
     "login": "登录",
     "signup": "注册"
   },
   "landing": {
-    "homeLabel": "InvestLens首页",
+    "homeLabel": "Impacticker首页",
     "accountMenu": "账户菜单",
     "previewEyebrow": "新闻影响分析预览",
     "signalLabel": "相关新闻综合信号",
@@ -39,12 +39,12 @@
     "previewNews3": "行业趋势与供应链变化",
     "previewScore": "短期影响可能性 · {score}分",
     "featuresTitle": "更快整理投资决策所需新闻",
-    "featuresDescription": "InvestLens围绕关注的证券收集新闻，并根据文章依据整理影响方向、评分与原因。",
+    "featuresDescription": "Impacticker围绕关注的证券收集新闻，并根据文章依据整理影响方向、评分与原因。",
     "newsDescription": "在一个页面查看与投资组合相关的最新报道。",
     "analysisDescription": "按文章区分利好、中性和利空方向，并提供1至10分影响评分。",
     "searchDescription": "通过代码或公司名称快速查找韩国和美国股票及ETF。",
     "marketsTitle": "集中查看韩国、美国股票与ETF",
-    "marketsDescription": "InvestLens使用后端证券与行情API，连接关注列表、价格走势和相关新闻。",
+    "marketsDescription": "Impacticker使用后端证券与行情API，连接关注列表、价格走势和相关新闻。",
     "supportedFeatures": "支持功能",
     "marketPoint1": "韩国与美国股票搜索",
     "marketPoint2": "境内外ETF查询",
@@ -190,7 +190,7 @@
     "usValue": "美国（US）",
     "stockValue": "股票（STOCK）",
     "etfValue": "交易所交易基金（ETF）",
-    "sourceNote": "证券信息以InvestLens后端最新证券主数据为准。",
+    "sourceNote": "证券信息以Impacticker后端最新证券主数据为准。",
     "portfolio": "投资组合",
     "portfolioDescription": "添加后，可在个性化动态中查看该证券相关新闻的影响分析。",
     "remove": "从投资组合中删除",
@@ -308,7 +308,7 @@
     "coldStart": "免费服务器唤醒可能需要最多1分钟。",
     "errorTitle": "无法加载信息",
     "errorDescription": "请稍后重试；若问题持续，请检查网络连接。",
-    "appLoading": "正在准备InvestLens...",
+    "appLoading": "正在准备Impacticker...",
     "unexpectedTitle": "发生意外错误",
     "unexpectedDescription": "您的操作内容已安全保留，请刷新页面尝试恢复。",
     "notFoundEyebrow": "404错误",

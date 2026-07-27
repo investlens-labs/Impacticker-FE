@@ -9,14 +9,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light')
 
   useEffect(() => {
-    const saved = window.localStorage.getItem('investlens.theme') as Theme | null
+    const saved = window.localStorage.getItem('impacticker.theme') as Theme | null
     const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
     setTheme(saved ?? preferred)
   }, [])
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
-    window.localStorage.setItem('investlens.theme', theme)
+    window.localStorage.setItem('impacticker.theme', theme)
   }, [theme])
 
   const value = useMemo(() => ({ theme, toggle: () => setTheme((current) => current === 'light' ? 'dark' : 'light') }), [theme])

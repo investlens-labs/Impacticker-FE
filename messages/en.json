@@ -1,6 +1,6 @@
 {
   "common": {
-    "brand": "InvestLens",
+    "brand": "Impacticker",
     "retry": "Try again",
     "previous": "Previous",
     "next": "Next",
@@ -17,13 +17,13 @@
     "user": "User"
   },
   "metadata": {
-    "homeTitle": "InvestLens | AI Investment News Impact Analysis",
+    "homeTitle": "Impacticker | AI Investment News Impact Analysis",
     "description": "Analyze key news for South Korean and U.S. stocks and ETFs, then review portfolio-specific impact direction and scores from 1 to 10.",
     "login": "Sign in",
     "signup": "Sign up"
   },
   "landing": {
-    "homeLabel": "InvestLens home",
+    "homeLabel": "Impacticker home",
     "accountMenu": "Account menu",
     "previewEyebrow": "News impact analysis preview",
     "signalLabel": "Aggregate related-news signal",
@@ -39,12 +39,12 @@
     "previewNews3": "Industry trends and supply chain changes",
     "previewScore": "Potential short-term impact · Score {score}",
     "featuresTitle": "Organize the news that informs investment decisions faster",
-    "featuresDescription": "InvestLens collects news for the securities you follow and uses article evidence to summarize impact direction, score, and reasoning.",
+    "featuresDescription": "Impacticker collects news for the securities you follow and uses article evidence to summarize impact direction, score, and reasoning.",
     "newsDescription": "Review the latest articles related to your portfolio in one place.",
     "analysisDescription": "Distinguish positive, neutral, and negative direction with a 1–10 impact score for each article.",
     "searchDescription": "Quickly find South Korean and U.S. stocks and ETFs by ticker or company name.",
     "marketsTitle": "South Korean and U.S. stocks and ETFs in one place",
-    "marketsDescription": "InvestLens connects watchlists, price trends, and related news using its backend instrument and market data APIs.",
+    "marketsDescription": "Impacticker connects watchlists, price trends, and related news using its backend instrument and market data APIs.",
     "supportedFeatures": "Supported features",
     "marketPoint1": "South Korean and U.S. stock search",
     "marketPoint2": "Domestic and international ETF discovery",
@@ -105,7 +105,7 @@
     "createAccount": "Create account",
     "login": "Sign in",
     "hasAccount": "Already have an account?",
-    "newHere": "New to InvestLens?",
+    "newHere": "New to Impacticker?",
     "signup": "Sign up"
   },
   "dashboard": {
@@ -190,7 +190,7 @@
     "usValue": "United States (US)",
     "stockValue": "Stock (STOCK)",
     "etfValue": "Exchange-traded fund (ETF)",
-    "sourceNote": "Security information is based on the latest instrument master from the InvestLens backend.",
+    "sourceNote": "Security information is based on the latest instrument master from the Impacticker backend.",
     "portfolio": "Portfolio",
     "portfolioDescription": "Add this security to view related news impact analysis in your personalized feed.",
     "remove": "Remove from portfolio",
@@ -308,7 +308,7 @@
     "coldStart": "The free server may take up to a minute to wake up.",
     "errorTitle": "Unable to load information",
     "errorDescription": "Please try again shortly. If the problem continues, check your network connection.",
-    "appLoading": "Preparing InvestLens...",
+    "appLoading": "Preparing Impacticker...",
     "unexpectedTitle": "An unexpected error occurred",
     "unexpectedDescription": "Your work is safe. Reload the page to recover.",
     "notFoundEyebrow": "404 error",

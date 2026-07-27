@@ -28,7 +28,7 @@ describe('apiClient', () => {
   it('401 응답에서 토큰을 삭제하고 인증 만료 이벤트를 보낸다', async () => {
     tokenStorage.set('expired-token')
     const unauthorized = vi.fn()
-    window.addEventListener('investlens:unauthorized', unauthorized)
+    window.addEventListener('impacticker:unauthorized', unauthorized)
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ message: 'Unauthorized' }), {
       status: 401,
       headers: { 'Content-Type': 'application/json' },
@@ -38,7 +38,7 @@ describe('apiClient', () => {
 
     expect(tokenStorage.get()).toBeNull()
     expect(unauthorized).toHaveBeenCalledOnce()
-    window.removeEventListener('investlens:unauthorized', unauthorized)
+    window.removeEventListener('impacticker:unauthorized', unauthorized)
   })
 
   it('서버 오류인 GET 요청만 제한적으로 재시도한다', async () => {

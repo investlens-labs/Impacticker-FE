@@ -57,7 +57,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 
       if (response.status === 401 && auth) {
         tokenStorage.clear()
-        window.dispatchEvent(new Event('investlens:unauthorized'))
+        window.dispatchEvent(new Event('impacticker:unauthorized'))
       }
 
       if (!response.ok) {

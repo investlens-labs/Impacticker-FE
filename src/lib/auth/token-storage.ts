@@ -1,4 +1,4 @@
-const ACCESS_TOKEN_KEY = 'investlens.accessToken'
+const ACCESS_TOKEN_KEY = 'impacticker.accessToken'
 
 export const tokenStorage = {
   get: () => (typeof window === 'undefined' ? null : window.localStorage.getItem(ACCESS_TOKEN_KEY)),
