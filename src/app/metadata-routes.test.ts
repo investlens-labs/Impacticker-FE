@@ -12,11 +12,15 @@ describe('metadata routes', () => {
     expect(result.sitemap).toMatch(/^https:\/\/.*\/sitemap\.xml$/)
   })
 
-  it('공개 랜딩 페이지만 sitemap에 포함한다', () => {
+  it('공개 랜딩과 정책 페이지를 sitemap에 포함한다', () => {
     const result = sitemap()
 
-    expect(result).toHaveLength(1)
+    expect(result).toHaveLength(3)
     expect(result[0]).toMatchObject({ url: expect.stringMatching(/^https:\/\/.*\/$/), priority: 1 })
+    expect(result.map(({ url }) => url)).toEqual(expect.arrayContaining([
+      expect.stringMatching(/\/privacy$/),
+      expect.stringMatching(/\/advertising-policy$/),
+    ]))
   })
 
   it('설치 가능한 웹 앱 manifest를 제공한다', () => {

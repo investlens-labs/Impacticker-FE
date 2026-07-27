@@ -16,6 +16,47 @@
     "admin": "管理者",
     "user": "一般ユーザー"
   },
+  "ads": {
+    "label": "広告",
+    "privacy": "プライバシーとCookie",
+    "policy": "広告運営ポリシー"
+  },
+  "legal": {
+    "eyebrow": "サービス運営ポリシー",
+    "updated": "最終更新",
+    "backHome": "ホームに戻る",
+    "privacy": {
+      "title": "プライバシーとCookieに関するお知らせ",
+      "description": "Impactickerがサービス提供と広告運営のために使用する情報、およびユーザーの選択肢について説明します。",
+      "accountTitle": "アカウントとサービスデータ",
+      "accountContent": "ログインに必要なメールアドレスと認証情報、登録した注目銘柄はサービス機能の提供に使用されます。認証トークンは端末に保存され、APIリクエストの認証にのみ使用されます。",
+      "preferencesTitle": "端末に保存される情報",
+      "preferencesContent": "表示言語やテーマなどの設定を維持するため、Cookieまたはブラウザストレージを使用する場合があります。",
+      "advertisingTitle": "広告と第三者サービス",
+      "advertisingContent": "広告機能が有効になると、Googleを含む第三者広告事業者が、広告配信、表示頻度管理、集計レポート、不正利用防止のためにCookieなどの技術を使用する場合があります。Impactickerはデフォルトで非パーソナライズ広告をリクエストします。",
+      "targetingTitle": "ポートフォリオ情報の保護",
+      "targetingContent": "保有銘柄、注目銘柄、ニュース閲覧履歴を広告オーディエンスの作成に使用したり、広告事業者へ直接提供したりしません。",
+      "choicesTitle": "ユーザーの選択肢",
+      "choicesContent": "広告のパーソナライズ設定はGoogle広告設定で確認できます。地域により同意が必要な場合は、Google認定の同意管理画面を提供します。",
+      "googleSettings": "Google広告設定",
+      "contactTitle": "プライバシーに関するお問い合わせ",
+      "contactPending": "広告機能を有効にする前に、専用のお問い合わせメールアドレスをこのページに掲載します。"
+    },
+    "advertising": {
+      "title": "広告運営ポリシー",
+      "description": "広告収益とニュース分析の独立性を分離し、ユーザーが広告を明確に識別できるようにする原則です。",
+      "labelTitle": "明確な広告表示",
+      "labelContent": "有料広告やスポンサーコンテンツには、広告またはスポンサーであることを近くに明確に表示します。",
+      "independenceTitle": "分析の独立性",
+      "independenceContent": "広告契約がニュース収集、AI影響方向、影響スコア、確率、評価理由に影響することはありません。",
+      "placementTitle": "節度ある配置",
+      "placementContent": "ログイン、エラー、読み込み画面やポートフォリオの追加・削除操作付近には広告を配置しません。コンテンツ利用を妨げない指定領域にのみ表示します。",
+      "prohibitedTitle": "許可しない広告",
+      "prohibitedContent": "収益保証、虚偽または誇張された投資成果、違法な金融商品、ユーザーを誤認させる広告は許可しません。",
+      "personalizationTitle": "広告パーソナライズの制限",
+      "personalizationContent": "Impactickerはポートフォリオデータを広告ターゲティングに使用せず、Google広告にはデフォルトで非パーソナライズ広告をリクエストします。"
+    }
+  },
   "metadata": {
     "homeTitle": "Impacticker | AI投資ニュース影響分析",
     "description": "韓国・米国の株式とETFの主要ニュースをポートフォリオに合わせて分析し、影響方向と1～10点のスコアを確認できます。",

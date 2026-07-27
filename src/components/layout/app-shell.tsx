@@ -1,6 +1,6 @@
 'use client'
 
-import { BriefcaseBusiness, ChevronDown, Info, LayoutDashboard, LogOut, Menu, Moon, Search, Sun, UserRound, X } from 'lucide-react'
+import { BadgeInfo, BriefcaseBusiness, ChevronDown, Info, LayoutDashboard, LogOut, Menu, Moon, Search, ShieldCheck, Sun, UserRound, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
@@ -17,6 +17,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { theme, toggle } = useTheme()
   const t = useTranslations('nav')
   const common = useTranslations('common')
+  const ads = useTranslations('ads')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [userOpen, setUserOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -64,6 +65,14 @@ export function AppShell({ children }: { children: ReactNode }) {
                     <p className="mt-0.5 text-[11px] text-slate-500">{user?.role === 'ADMIN' ? common('admin') : common('user')}</p>
                   </div>
                   <div className="border-b border-slate-100 p-1.5 sm:hidden dark:border-slate-800"><LocalizedLocaleSwitcher compact /></div>
+                  <div className="border-b border-slate-100 py-1 dark:border-slate-800">
+                    <Link role="menuitem" href="/privacy" className="flex h-9 items-center gap-2 rounded-lg px-2.5 text-sm text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800">
+                      <ShieldCheck className="size-4" />{ads('privacy')}
+                    </Link>
+                    <Link role="menuitem" href="/advertising-policy" className="flex h-9 items-center gap-2 rounded-lg px-2.5 text-sm text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800">
+                      <BadgeInfo className="size-4" />{ads('policy')}
+                    </Link>
+                  </div>
                   <button role="menuitem" onClick={signOut} className="mt-1 flex h-9 w-full items-center gap-2 rounded-lg px-2.5 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/50">
                     <LogOut className="size-4" />{t('logout')}
                   </button>
