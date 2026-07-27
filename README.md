@@ -7,6 +7,7 @@
 - [서비스 소개](./docs/service-introduction.md)
 - [개발 문서](./docs/development.md)
 - [검색엔진 최적화](./docs/seo.md)
+- [트래픽 분석](./docs/analytics.md)
 - [수익화 로드맵](./docs/monetization.md)
 - [배포 파이프라인](./docs/deployment.md)
 - [Codex 에이전트 팀 운영](./docs/agent-team.md)

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { getLocale, getTranslations } from 'next-intl/server'
 import type { ReactNode } from 'react'
 import './globals.css'
+import { CloudflareWebAnalytics } from '@/components/analytics/cloudflare-web-analytics'
 import { getSiteUrl, siteName } from '@/lib/seo'
 
 const themeInitializationScript = `
@@ -57,6 +58,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           {t('skipToContent')}
         </a>
         {children}
+        <CloudflareWebAnalytics token={process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN} />
       </body>
     </html>
   )
