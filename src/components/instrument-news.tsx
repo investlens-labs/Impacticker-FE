@@ -1,12 +1,12 @@
 'use client'
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { AlertTriangle, ChevronLeft, ChevronRight, Clock3, ExternalLink, Languages, Newspaper, Sparkles } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Clock3, ExternalLink, Languages, Newspaper, Sparkles } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { ImpactBadge } from '@/components/impact-badge'
 import { InstrumentSentiment, InstrumentSentimentSkeleton } from '@/components/instrument-sentiment'
-import { StatusState } from '@/components/ui/status-state'
+import { ErrorState, StatusState } from '@/components/ui/status-state'
 import { instrumentApi } from '@/lib/api/services'
 import type { FeedItem, Impact, NewsLanguage } from '@/lib/api/types'
 import { formatDate } from '@/lib/format'
@@ -56,12 +56,12 @@ export function InstrumentNews({ instrumentId, ticker }: { instrumentId: string;
           : sentiment.isError ? (
             <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-200">
               <span>{t('sentimentFailed')}</span>
-              <button type="button" className="h-8 rounded-lg px-2.5 font-semibold hover:bg-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:hover:bg-amber-900/40" onClick={() => void sentiment.refetch()}>{common('retry')}</button>
+              <button type="button" disabled={sentiment.isFetching} className="h-8 rounded-lg px-2.5 font-semibold hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:hover:bg-amber-900/40" onClick={() => void sentiment.refetch()}>{common('retry')}</button>
             </div>
           ) : null)}
 
       {news.isLoading ? <InstrumentNewsSkeleton />
-        : news.isError ? <StatusState compact icon={AlertTriangle} title={t('collectFailedTitle')} description={t('collectFailedDescription')} actionLabel={common('retry')} onAction={() => void news.refetch()} />
+        : news.isError ? <ErrorState compact error={news.error} retrying={news.isFetching} onRetry={() => void news.refetch()} />
         : !news.data?.content.length ? <StatusState compact title={t('relatedEmptyTitle')} description={t('relatedEmptyDescription')} />
         : (
           <>

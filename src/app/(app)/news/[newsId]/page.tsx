@@ -19,7 +19,7 @@ export default function NewsDetailPage() {
   const detail = useQuery({ queryKey: queryKeys.newsDetail(newsId), queryFn: () => newsApi.detail(newsId), enabled: Boolean(newsId) })
 
   if (detail.isLoading) return <LoadingState label={t('detailLoading')} />
-  if (detail.isError) return <ErrorState onRetry={() => void detail.refetch()} />
+  if (detail.isError) return <ErrorState error={detail.error} retrying={detail.isFetching} onRetry={() => void detail.refetch()} />
   if (!detail.data) return <StatusState title={t('notFoundTitle')} description={t('notFoundDescription')} />
 
   const news = detail.data

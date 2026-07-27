@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 import { useParams } from 'next/navigation'
 import { InstrumentLogo, LogoAttribution } from '@/components/instrument-logo'
 import { Button } from '@/components/ui/button'
-import { ErrorState, LoadingState, StatusState } from '@/components/ui/status-state'
+import { ErrorNotice, ErrorState, LoadingState, StatusState } from '@/components/ui/status-state'
 import { InstrumentChart } from '@/components/instrument-chart'
 import { InstrumentNews } from '@/components/instrument-news'
 import { ScrollToNewsButton } from '@/components/scroll-to-news-button'
@@ -40,7 +40,7 @@ export default function InstrumentDetailPage() {
   if (instrument.error instanceof ApiError && instrument.error.status === 404) {
     return <StatusState title={t('notFoundTitle')} description={t('notFoundDescription')} />
   }
-  if (instrument.isError) return <ErrorState onRetry={() => void instrument.refetch()} />
+  if (instrument.isError) return <ErrorState error={instrument.error} retrying={instrument.isFetching} onRetry={() => void instrument.refetch()} />
   if (!instrument.data) return null
 
   const data = instrument.data
@@ -79,7 +79,8 @@ export default function InstrumentDetailPage() {
           <h2 className="text-sm font-semibold text-slate-950 dark:text-white">{t('portfolio')}</h2>
           <p className="mt-1 text-xs leading-5 text-slate-500">{t('portfolioDescription')}</p>
           <Button className="mt-4 w-full" variant={isAdded ? 'danger' : 'primary'} icon={isAdded ? Trash2 : Plus} disabled={portfolio.isLoading || portfolioPending} loading={portfolioPending} onClick={() => portfolioItem ? removeMutation.mutate(portfolioItem.id) : addMutation.mutate({ instrumentId: data.id })}>{isAdded ? t('remove') : t('add')}</Button>
-          {(addMutation.isError || removeMutation.isError) && <p role="alert" className="mt-2 text-xs text-red-600">{t('portfolioFailed')}</p>}
+          {addMutation.isError && <ErrorNotice className="mt-2 text-xs" error={addMutation.error} fallback={t('portfolioFailed')} />}
+          {removeMutation.isError && <ErrorNotice className="mt-2 text-xs" error={removeMutation.error} fallback={t('portfolioFailed')} />}
           <Link href="/dashboard" className="mt-2 inline-flex h-9 w-full items-center justify-center rounded-lg text-xs font-semibold text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-700/10">{t('viewPersonalizedNews')}</Link>
         </aside>
       </div>

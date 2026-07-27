@@ -9,6 +9,7 @@ import { useState, type FormEvent } from 'react'
 import { useAuth } from '@/components/providers/auth-provider'
 import { Button } from '@/components/ui/button'
 import { ApiError } from '@/lib/api/client'
+import { getApiErrorKind } from '@/lib/api/error-feedback'
 import { authApi } from '@/lib/api/services'
 import logo from '@/app/icon.png'
 
@@ -33,9 +34,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
     if (!mutation.isPending) mutation.mutate()
   }
 
-  const error = mutation.error instanceof ApiError
-    ? mutation.error.status === 409 ? t('duplicateEmail') : t('requestFailed')
-    : mutation.error ? t('requestFailed') : null
+  const error = mutation.error ? getAuthErrorMessage(mutation.error, mode, t) : null
 
   return (
     <div className="w-full max-w-[420px]">
@@ -70,4 +69,23 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
       </div>
     </div>
   )
+}
+
+function getAuthErrorMessage(
+  error: unknown,
+  mode: 'login' | 'signup',
+  t: ReturnType<typeof useTranslations<'auth'>>,
+) {
+  if (error instanceof ApiError) {
+    if (mode === 'login' && [400, 401, 403].includes(error.status)) return t('invalidCredentials')
+    if (mode === 'signup' && error.status === 409) return t('duplicateEmail')
+    if (mode === 'signup' && [400, 422].includes(error.status)) return t('invalidSignup')
+  }
+
+  const kind = getApiErrorKind(error)
+  if (kind === 'network') return t('networkError')
+  if (kind === 'timeout') return t('timeoutError')
+  if (kind === 'rateLimit') return t('rateLimitError')
+  if (kind === 'server') return t('serverError')
+  return t('requestFailed')
 }

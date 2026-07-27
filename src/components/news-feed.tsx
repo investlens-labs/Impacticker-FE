@@ -55,7 +55,7 @@ export function NewsFeed({ initialSize = 10 }: { initialSize?: number }) {
       </div>
 
       {query.isLoading ? <div className="grid gap-3"><NewsSkeleton /><NewsSkeleton /><NewsSkeleton /></div>
-        : query.isError ? <ErrorState onRetry={() => void query.refetch()} />
+        : query.isError ? <ErrorState error={query.error} retrying={query.isFetching} onRetry={() => void query.refetch()} />
         : !query.data?.content.length ? <StatusState title={t('emptyTitle')} description={t('emptyDescription')} />
         : (
           <>

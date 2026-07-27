@@ -8,7 +8,7 @@ import { useEffect, useState, type KeyboardEvent } from 'react'
 import { InstrumentLogo, LogoAttribution } from '@/components/instrument-logo'
 import { PageHeading } from '@/components/page-heading'
 import { Button } from '@/components/ui/button'
-import { ErrorState, StatusState } from '@/components/ui/status-state'
+import { ErrorNotice, ErrorState, StatusState } from '@/components/ui/status-state'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { instrumentApi, portfolioApi } from '@/lib/api/services'
 import type { Instrument, InstrumentType, Market } from '@/lib/api/types'
@@ -79,7 +79,7 @@ export default function SearchPage() {
       </div>
 
       {instruments.isLoading ? <SearchSkeleton />
-        : instruments.isError ? <ErrorState onRetry={() => void instruments.refetch()} />
+        : instruments.isError ? <ErrorState error={instruments.error} retrying={instruments.isFetching} onRetry={() => void instruments.refetch()} />
         : !instruments.data?.length ? <StatusState title={t('emptyTitle')} description={t('emptyDescription')} />
         : (
           <div className="surface overflow-hidden">
@@ -95,7 +95,7 @@ export default function SearchPage() {
             </div>
           </div>
         )}
-      {addMutation.isError && <div role="alert" className="fixed bottom-4 right-4 rounded-lg border border-red-200 bg-white px-4 py-3 text-sm text-red-600 shadow-xl dark:border-red-900 dark:bg-slate-900">{t('addFailed')}</div>}
+      {addMutation.isError && <ErrorNotice className="fixed bottom-4 right-4 z-20 max-w-sm bg-white shadow-xl dark:bg-slate-900" error={addMutation.error} fallback={t('addFailed')} />}
     </>
   )
 }
