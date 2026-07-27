@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'InvestLens',
-    short_name: 'InvestLens',
+    name: 'Impacticker',
+    short_name: 'Impacticker',
     description: '포트폴리오 기반 투자 뉴스와 AI 영향 분석 서비스',
     start_url: '/',
     display: 'standalone',

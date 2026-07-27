@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <main id="main-content" className="grid min-h-screen bg-white lg:grid-cols-[minmax(340px,0.9fr)_1.1fr] dark:bg-slate-950">
       <section className="hidden bg-[#0d3329] p-10 text-white lg:flex lg:flex-col lg:justify-between">
-        <div className="flex items-center gap-2.5 text-lg font-bold"><span className="grid size-8 overflow-hidden rounded-lg bg-white/10" aria-hidden><Image src={logo} alt="" priority className="size-full object-contain" /></span>InvestLens</div>
+        <div className="flex items-center gap-2.5 text-lg font-bold"><span className="grid size-8 overflow-hidden rounded-lg bg-white/10" aria-hidden><Image src={logo} alt="" priority className="size-full object-contain" /></span>Impacticker</div>
         <div className="max-w-lg">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-300">{t('tagline')}</p>
           <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight">{t('heroLine1')}<br />{t('heroLine2')}</h1>

@@ -1,4 +1,4 @@
-# InvestLens Frontend
+# Impacticker Frontend
 
 뉴스 기반 투자 영향 분석 서비스의 Next.js 프론트엔드입니다. 포트폴리오를 기준으로 맞춤 뉴스, 종목별 영향 방향과 점수를 제공합니다.
 
@@ -27,11 +27,11 @@ npm install
 npm run dev
 ```
 
-서버 프록시의 기본 업스트림은 `https://investlens-be.onrender.com/api/v1`이며 `INVESTLENS_API_BASE_URL`로 변경할 수 있습니다. 브라우저는 CORS 영향을 피하기 위해 기본적으로 동일 출처 `/api/backend`를 호출합니다.
+서버 프록시의 기본 업스트림은 `https://investlens-be.onrender.com/api/v1`이며 `IMPACTICKER_API_BASE_URL`로 변경할 수 있습니다. 브라우저는 CORS 영향을 피하기 위해 기본적으로 동일 출처 `/api/backend`를 호출합니다.
 
 ## Cloudflare Workers 배포
 
-프로젝트는 OpenNext 어댑터와 Wrangler를 통해 `investlens` Worker로 배포됩니다.
+프로젝트는 OpenNext 어댑터와 Wrangler를 통해 `impacticker` Worker로 배포됩니다.
 
 Pull Request에는 lint, typecheck, test와 OpenNext build를 자동 실행하고, `master` 반영 시 동일 검증을 통과한 빌드를 Cloudflare Workers에 자동 배포합니다. 운영 배포 후 `/login` 스모크 테스트까지 완료되어야 파이프라인이 성공합니다.
 

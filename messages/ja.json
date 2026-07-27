@@ -1,6 +1,6 @@
 {
   "common": {
-    "brand": "InvestLens",
+    "brand": "Impacticker",
     "retry": "再試行",
     "previous": "前へ",
     "next": "次へ",
@@ -17,13 +17,13 @@
     "user": "一般ユーザー"
   },
   "metadata": {
-    "homeTitle": "InvestLens | AI投資ニュース影響分析",
+    "homeTitle": "Impacticker | AI投資ニュース影響分析",
     "description": "韓国・米国の株式とETFの主要ニュースをポートフォリオに合わせて分析し、影響方向と1～10点のスコアを確認できます。",
     "login": "ログイン",
     "signup": "新規登録"
   },
   "landing": {
-    "homeLabel": "InvestLensホーム",
+    "homeLabel": "Impactickerホーム",
     "accountMenu": "アカウントメニュー",
     "previewEyebrow": "ニュース影響分析プレビュー",
     "signalLabel": "関連ニュースの総合シグナル",
@@ -44,7 +44,7 @@
     "analysisDescription": "記事ごとにポジティブ・中立・ネガティブ方向と1～10点の影響度を表示します。",
     "searchDescription": "ティッカーや企業名から韓国・米国の株式とETFをすばやく検索できます。",
     "marketsTitle": "韓国・米国の株式とETFを一か所で",
-    "marketsDescription": "InvestLensの銘柄・価格APIを利用し、注目銘柄、価格推移、関連ニュースをつなぎます。",
+    "marketsDescription": "Impactickerの銘柄・価格APIを利用し、注目銘柄、価格推移、関連ニュースをつなぎます。",
     "supportedFeatures": "対応機能",
     "marketPoint1": "韓国・米国株式の検索",
     "marketPoint2": "国内外ETFの検索",
@@ -190,7 +190,7 @@
     "usValue": "米国（US）",
     "stockValue": "株式（STOCK）",
     "etfValue": "上場投資信託（ETF）",
-    "sourceNote": "銘柄情報はInvestLensバックエンドの最新銘柄マスターに基づいて提供されます。",
+    "sourceNote": "銘柄情報はImpactickerバックエンドの最新銘柄マスターに基づいて提供されます。",
     "portfolio": "ポートフォリオ",
     "portfolioDescription": "登録すると、この銘柄に関連するニュース影響分析をパーソナライズフィードで確認できます。",
     "remove": "ポートフォリオから削除",
@@ -308,7 +308,7 @@
     "coldStart": "無料サーバーの起動に最大1分ほどかかる場合があります。",
     "errorTitle": "情報を読み込めませんでした",
     "errorDescription": "しばらくしてからもう一度お試しください。問題が続く場合はネットワーク接続をご確認ください。",
-    "appLoading": "InvestLensを準備しています...",
+    "appLoading": "Impactickerを準備しています...",
     "unexpectedTitle": "予期しないエラーが発生しました",
     "unexpectedDescription": "作業内容は保持されています。画面を再読み込みして復旧をお試しください。",
     "notFoundEyebrow": "404エラー",

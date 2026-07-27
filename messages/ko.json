@@ -1,6 +1,6 @@
 {
   "common": {
-    "brand": "InvestLens",
+    "brand": "Impacticker",
     "retry": "다시 시도",
     "previous": "이전",
     "next": "다음",
@@ -17,13 +17,13 @@
     "user": "일반 사용자"
   },
   "metadata": {
-    "homeTitle": "InvestLens | AI 투자 뉴스 영향 분석",
+    "homeTitle": "Impacticker | AI 투자 뉴스 영향 분석",
     "description": "한국·미국 주식과 ETF의 주요 뉴스를 포트폴리오에 맞춰 분석하고, 영향 방향과 1–10점 점수를 한눈에 확인하세요.",
     "login": "로그인",
     "signup": "회원가입"
   },
   "landing": {
-    "homeLabel": "InvestLens 홈",
+    "homeLabel": "Impacticker 홈",
     "accountMenu": "계정 메뉴",
     "previewEyebrow": "뉴스 영향 분석 미리보기",
     "signalLabel": "관련 뉴스 종합 신호",
@@ -44,7 +44,7 @@
     "analysisDescription": "긍정·중립·부정 방향과 1–10점 영향도를 기사별로 구분합니다.",
     "searchDescription": "티커와 기업명으로 한국·미국 주식 및 ETF를 빠르게 찾습니다.",
     "marketsTitle": "한국·미국 주식과 ETF를 한곳에서",
-    "marketsDescription": "InvestLens 백엔드의 종목 데이터와 시세 API를 사용해 국장과 미장의 관심 종목, 가격 흐름, 관련 뉴스를 연결합니다.",
+    "marketsDescription": "Impacticker 백엔드의 종목 데이터와 시세 API를 사용해 국장과 미장의 관심 종목, 가격 흐름, 관련 뉴스를 연결합니다.",
     "supportedFeatures": "지원 기능",
     "marketPoint1": "한국·미국 주식 검색",
     "marketPoint2": "국내외 ETF 탐색",
@@ -190,7 +190,7 @@
     "usValue": "미국 (US)",
     "stockValue": "주식 (STOCK)",
     "etfValue": "상장지수펀드 (ETF)",
-    "sourceNote": "종목 정보는 InvestLens 백엔드의 최신 종목 마스터를 기준으로 제공됩니다.",
+    "sourceNote": "종목 정보는 Impacticker 백엔드의 최신 종목 마스터를 기준으로 제공됩니다.",
     "portfolio": "포트폴리오",
     "portfolioDescription": "등록하면 이 종목과 관련된 뉴스 영향 분석을 맞춤 피드에서 확인할 수 있습니다.",
     "remove": "포트폴리오에서 삭제",
@@ -308,7 +308,7 @@
     "coldStart": "무료 서버가 깨어나는 데 최대 1분 정도 걸릴 수 있어요.",
     "errorTitle": "정보를 불러오지 못했습니다",
     "errorDescription": "잠시 후 다시 시도해 주세요. 문제가 계속되면 네트워크 연결을 확인해 주세요.",
-    "appLoading": "InvestLens를 준비하는 중...",
+    "appLoading": "Impacticker를 준비하는 중...",
     "unexpectedTitle": "예기치 않은 오류가 발생했습니다",
     "unexpectedDescription": "작업 내용은 안전하게 유지됩니다. 화면을 다시 불러와 복구해 보세요.",
     "notFoundEyebrow": "404 오류",

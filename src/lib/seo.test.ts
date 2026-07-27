@@ -26,7 +26,7 @@ describe('SEO helpers', () => {
     const data = buildStructuredData('투자 뉴스 영향 분석 서비스', 'ko-KR')
 
     expect(data['@graph'].map((item) => item['@type'])).toEqual(['Organization', 'WebSite', 'WebApplication'])
-    expect(data['@graph'][1]).toMatchObject({ name: 'InvestLens', description: '투자 뉴스 영향 분석 서비스', inLanguage: 'ko-KR' })
+    expect(data['@graph'][1]).toMatchObject({ name: 'Impacticker', description: '투자 뉴스 영향 분석 서비스', inLanguage: 'ko-KR' })
   })
 
   it('JSON-LD의 HTML 시작 문자를 안전하게 이스케이프한다', () => {

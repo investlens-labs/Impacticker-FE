@@ -1,4 +1,4 @@
-# InvestLens Codex Team Guide
+# Impacticker Codex Team Guide
 
 이 문서는 이 저장소에서 동작하는 Codex와 OMX 에이전트의 최상위 실행 규칙입니다. 목표는 필요한 경우에만 병렬화하고, 파일 충돌 없이 구현한 뒤 검증·커밋·푸시까지 자동으로 완료하는 것입니다.
 
@@ -24,7 +24,7 @@
 - 브라우저 API 진입점: `/api/backend`
 - 서버 API 기본 주소: `https://investlens-be.onrender.com/api/v1`
 - Next.js 프로젝트이므로 Vite 전용 `VITE_API_BASE_URL`을 추가하지 않습니다.
-- 서버 업스트림은 `INVESTLENS_API_BASE_URL`, 브라우저 공개 진입점은 `NEXT_PUBLIC_API_BASE_URL`을 사용합니다.
+- 서버 업스트림은 `IMPACTICKER_API_BASE_URL`, 브라우저 공개 진입점은 `NEXT_PUBLIC_API_BASE_URL`을 사용합니다.
 
 ## 3. 작업 규모별 팀 구성
 

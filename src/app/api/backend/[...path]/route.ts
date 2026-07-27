@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 import { createProxyResponse } from '@/lib/api/proxy-response'
 import { getUpstreamTimeout } from '@/lib/api/proxy-timeout'
 
-const BACKEND_API_URL = process.env.INVESTLENS_API_BASE_URL ?? 'https://investlens-be.onrender.com/api/v1'
+const BACKEND_API_URL = process.env.IMPACTICKER_API_BASE_URL ?? 'https://investlens-be.onrender.com/api/v1'
 const ALLOWED_METHODS = new Set(['GET', 'POST', 'DELETE'])
 
 async function proxy(request: NextRequest, context: { params: Promise<{ path: string[] }> }) {

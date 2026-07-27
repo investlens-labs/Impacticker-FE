@@ -1,5 +1,5 @@
-export const siteName = 'InvestLens'
-export const defaultSiteUrl = 'https://investlens.mandoo4137-a53.workers.dev'
+export const siteName = 'Impacticker'
+export const defaultSiteUrl = 'https://impacticker.mandoo4137-a53.workers.dev'
 
 const supportedProtocols = new Set(['http:', 'https:'])
 

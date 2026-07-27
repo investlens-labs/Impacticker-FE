@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = 'InvestLens — 투자자를 위한 뉴스 인텔리전스'
+export const alt = 'Impacticker — 투자자를 위한 뉴스 인텔리전스'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -21,7 +21,7 @@ export default function OpenGraphImage() {
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 18, fontSize: 34, fontWeight: 700 }}>
         <div style={{ display: 'flex', width: 52, height: 52, alignItems: 'center', justifyContent: 'center', borderRadius: 14, background: '#5ee9bb', color: '#0d3329' }}>IL</div>
-        InvestLens
+        Impacticker
       </div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', flexDirection: 'column', fontSize: 66, fontWeight: 700, lineHeight: 1.18, letterSpacing: '-2px' }}>

@@ -21,7 +21,7 @@ describe('metadata routes', () => {
 
   it('설치 가능한 웹 앱 manifest를 제공한다', () => {
     expect(manifest()).toMatchObject({
-      name: 'InvestLens',
+      name: 'Impacticker',
       start_url: '/',
       display: 'standalone',
       icons: [expect.objectContaining({ src: '/icon.png', type: 'image/png' })],

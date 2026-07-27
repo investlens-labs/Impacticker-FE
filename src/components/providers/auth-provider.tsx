@@ -43,8 +43,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [queryClient, router])
 
   useEffect(() => {
-    window.addEventListener('investlens:unauthorized', signOut)
-    return () => window.removeEventListener('investlens:unauthorized', signOut)
+    window.addEventListener('impacticker:unauthorized', signOut)
+    return () => window.removeEventListener('impacticker:unauthorized', signOut)
   }, [signOut])
 
   useEffect(() => {

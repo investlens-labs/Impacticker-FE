@@ -64,7 +64,7 @@ export default async function HomePage() {
         <div className="mx-auto flex h-15 max-w-6xl items-center gap-3 px-4 sm:px-5">
           <Link href="/" aria-label={landing('homeLabel')} className="flex shrink-0 items-center gap-2.5 font-bold tracking-tight">
             <Image src={logo} alt="" priority className="size-8 rounded-lg object-contain" />
-            <span className="hidden text-lg sm:inline">InvestLens</span>
+            <span className="hidden text-lg sm:inline">Impacticker</span>
           </Link>
           <nav aria-label={landing('accountMenu')} className="ml-auto flex items-center gap-2">
             <LocaleSwitcher compact />
@@ -159,7 +159,7 @@ export default async function HomePage() {
 
       <footer className="border-t border-slate-200 px-5 py-6 text-center text-xs leading-5 text-slate-500 dark:border-slate-800">
         <p className="inline-flex items-center gap-1.5"><BriefcaseBusiness className="size-3.5" />{auth('disclaimer')}</p>
-        <p className="mt-1">© {new Date().getFullYear()} InvestLens</p>
+        <p className="mt-1">© {new Date().getFullYear()} Impacticker</p>
       </footer>
     </div>
   )

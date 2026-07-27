@@ -1,4 +1,4 @@
-const targetUrl = process.env.SMOKE_URL ?? "https://investlens.mandoo4137-a53.workers.dev/";
+const targetUrl = process.env.SMOKE_URL ?? "https://impacticker.mandoo4137-a53.workers.dev/";
 const attempts = Number(process.env.SMOKE_ATTEMPTS ?? 8);
 const delayMs = Number(process.env.SMOKE_DELAY_MS ?? 5_000);
 
@@ -21,19 +21,19 @@ async function verifyDeployment() {
   const homeResponse = await fetch(createRequestUrl(), createRequestOptions());
   const homeBody = await homeResponse.text();
   const homeReady = homeResponse.ok
-    && homeBody.includes("InvestLens")
+    && homeBody.includes("Impacticker")
     && homeBody.includes("<h1")
     && homeBody.includes("application/ld+json")
     && homeBody.includes('rel="canonical"');
 
   if (!homeReady) {
-    return { ok: false, message: `${homeResponse.status} ${homeResponse.url}, expected SEO-ready InvestLens HTML` };
+    return { ok: false, message: `${homeResponse.status} ${homeResponse.url}, expected SEO-ready Impacticker HTML` };
   }
 
   const textChecks = [
     ["/robots.txt", ["User-Agent: *", "Sitemap:"]],
     ["/sitemap.xml", ["<urlset", new URL(targetUrl).origin]],
-    ["/manifest.webmanifest", ['"name":"InvestLens"', '"start_url":"/"']],
+    ["/manifest.webmanifest", ['"name":"Impacticker"', '"start_url":"/"']],
   ];
 
   for (const [path, expectedValues] of textChecks) {

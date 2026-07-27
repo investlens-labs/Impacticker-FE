@@ -1,6 +1,6 @@
 # 검색엔진 최적화 운영
 
-InvestLens의 기술 SEO는 검색엔진이 공개 서비스 소개를 정확히 수집하고 브랜드, 설명, 공유 이미지를 일관되게 이해하도록 구성합니다. 기술 SEO는 크롤링과 색인 가능성을 높이지만 특정 검색어의 순위, 색인 시점 또는 리치 결과 노출을 보장하지 않습니다.
+Impacticker의 기술 SEO는 검색엔진이 공개 서비스 소개를 정확히 수집하고 브랜드, 설명, 공유 이미지를 일관되게 이해하도록 구성합니다. 기술 SEO는 크롤링과 색인 가능성을 높이지만 특정 검색어의 순위, 색인 시점 또는 리치 결과 노출을 보장하지 않습니다.
 
 ## 색인 정책
 
@@ -27,7 +27,7 @@ InvestLens의 기술 SEO는 검색엔진이 공개 서비스 소개를 정확히
 사이트 origin은 `NEXT_PUBLIC_SITE_URL`로 관리합니다. 커스텀 도메인을 연결하면 이 값을 새 HTTPS origin으로 변경한 뒤 재배포해야 canonical, sitemap, JSON-LD가 같은 주소를 사용합니다.
 
 ```dotenv
-NEXT_PUBLIC_SITE_URL=https://investlens.example.com
+NEXT_PUBLIC_SITE_URL=https://impacticker.example.com
 NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=google에서_발급한_값
 NEXT_PUBLIC_NAVER_SITE_VERIFICATION=naver에서_발급한_값
 ```
@@ -41,10 +41,10 @@ NEXT_PUBLIC_NAVER_SITE_VERIFICATION=naver에서_발급한_값
 ## 배포 후 확인
 
 ```bash
-curl -I https://investlens.mandoo4137-a53.workers.dev/
-curl https://investlens.mandoo4137-a53.workers.dev/robots.txt
-curl https://investlens.mandoo4137-a53.workers.dev/sitemap.xml
-curl https://investlens.mandoo4137-a53.workers.dev/manifest.webmanifest
+curl -I https://impacticker.mandoo4137-a53.workers.dev/
+curl https://impacticker.mandoo4137-a53.workers.dev/robots.txt
+curl https://impacticker.mandoo4137-a53.workers.dev/sitemap.xml
+curl https://impacticker.mandoo4137-a53.workers.dev/manifest.webmanifest
 ```
 
 운영 배포 후 다음 외부 도구에서 확인합니다.

@@ -1,8 +1,8 @@
-# InvestLens 프론트엔드 개발 문서
+# Impacticker 프론트엔드 개발 문서
 
 ## 1. 개발 목표
 
-InvestLens 프론트엔드는 백엔드 OpenAPI 명세를 단일 기준으로 삼아 인증, 종목, 포트폴리오, 뉴스 기능을 실제 API와 연결한 Next.js 애플리케이션입니다.
+Impacticker 프론트엔드는 백엔드 OpenAPI 명세를 단일 기준으로 삼아 인증, 종목, 포트폴리오, 뉴스 기능을 실제 API와 연결한 Next.js 애플리케이션입니다.
 
 개발 과정에서는 다음 원칙을 우선했습니다.
 
@@ -79,7 +79,7 @@ flowchart LR
     QUERY --> SERVICE[Domain API Services]
     SERVICE --> CLIENT[Common Fetch Client]
     CLIENT --> PROXY[Next.js Route Handler<br/>/api/backend]
-    PROXY --> BE[InvestLens Backend<br/>/api/v1]
+    PROXY --> BE[Impacticker Backend<br/>/api/v1]
     CLIENT --> TOKEN[Local Token Storage]
     QUERY --> CACHE[Query Cache]
 ```
@@ -90,7 +90,7 @@ flowchart LR
 2. `services.ts`가 DTO에 맞는 경로와 query parameter를 구성합니다.
 3. 공통 `apiClient`가 JWT, JSON header, timeout과 오류 정책을 적용합니다.
 4. 브라우저 요청은 같은 출처의 `/api/backend`로 전달됩니다.
-5. Next.js Route Handler가 허용된 경로를 실제 InvestLens 백엔드로 전달합니다.
+5. Next.js Route Handler가 허용된 경로를 실제 Impacticker 백엔드로 전달합니다.
 6. 성공 결과는 Query Cache에 저장되고 화면이 갱신됩니다.
 
 ## 6. API 연동
@@ -98,7 +98,7 @@ flowchart LR
 백엔드 기준 주소는 다음 환경 변수로 관리합니다.
 
 ```dotenv
-INVESTLENS_API_BASE_URL=https://investlens-be.onrender.com/api/v1
+IMPACTICKER_API_BASE_URL=https://investlens-be.onrender.com/api/v1
 NEXT_PUBLIC_API_BASE_URL=/api/backend
 ```
 
@@ -154,7 +154,7 @@ Authorization: Bearer {accessToken}
 인증된 요청이 `401 Unauthorized`를 반환하면 다음 순서로 처리합니다.
 
 1. 저장된 Access Token 삭제
-2. `investlens:unauthorized` 이벤트 발행
+2. `impacticker:unauthorized` 이벤트 발행
 3. 인증 Provider가 사용자 상태와 Query Cache 정리
 4. 로그인 화면으로 이동
 
@@ -339,7 +339,7 @@ git diff --check
 
 ### 저장소 설정
 
-- Worker 이름: `investlens`
+- Worker 이름: `impacticker`
 - Worker 진입점: `.open-next/worker.js`
 - 정적 자산: `.open-next/assets`
 - Node.js 호환성: `nodejs_compat`
@@ -355,7 +355,7 @@ Pull Request는 품질 검증과 OpenNext 빌드까지만 수행하고, `master`
 런타임에는 다음 공개 환경 변수가 적용됩니다.
 
 ```text
-INVESTLENS_API_BASE_URL=https://investlens-be.onrender.com/api/v1
+IMPACTICKER_API_BASE_URL=https://investlens-be.onrender.com/api/v1
 NEXT_PUBLIC_API_BASE_URL=/api/backend
 ```
 
