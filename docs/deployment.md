@@ -1,6 +1,6 @@
 # 배포 파이프라인
 
-InvestLens 프론트엔드는 GitHub Actions를 단일 배포 주체로 사용해 Cloudflare Workers에 배포합니다. Pull Request에서는 동일한 품질 검증만 수행하고, `master` 반영 뒤에만 운영 배포와 스모크 테스트를 실행합니다.
+Impacticker 프론트엔드는 GitHub Actions를 단일 배포 주체로 사용해 Cloudflare Workers에 배포합니다. Pull Request에서는 동일한 품질 검증만 수행하고, `master` 반영 뒤에만 운영 배포와 스모크 테스트를 실행합니다.
 
 ## 자동 실행 흐름
 
@@ -13,7 +13,7 @@ master push  → install → lint → typecheck → test → OpenNext build → 
 - npm 다운로드 캐시와 `.next/cache`를 재사용합니다.
 - OpenNext 빌드는 한 번만 실행하고, 검증된 `.open-next` 결과를 `deploy:built`로 업로드합니다.
 - 같은 Pull Request의 이전 실행은 취소하지만 운영 배포는 중간에 취소하지 않습니다.
-- 운영 확인은 캐시를 우회해 공개 랜딩 `/`이 정상 InvestLens HTML을 반환할 때까지 제한적으로 재시도합니다.
+- 운영 확인은 캐시를 우회해 공개 랜딩 `/`이 정상 Impacticker HTML을 반환할 때까지 제한적으로 재시도합니다.
 - Dependabot이 npm 패키지와 GitHub Actions 업데이트를 매주 묶어서 제안합니다.
 
 워크플로 파일은 [`.github/workflows/ci-deploy.yml`](../.github/workflows/ci-deploy.yml), 스모크 테스트는 [`scripts/smoke-deployment.mjs`](../scripts/smoke-deployment.mjs)에 있습니다.
@@ -25,7 +25,7 @@ master push  → install → lint → typecheck → test → OpenNext build → 
 | 이름 | 용도 |
 |---|---|
 | `CLOUDFLARE_ACCOUNT_ID` | 배포 대상 Cloudflare 계정 식별 |
-| `CLOUDFLARE_API_TOKEN` | `investlens` Worker 배포 권한 |
+| `CLOUDFLARE_API_TOKEN` | `impacticker` Worker 배포 권한 |
 
 API Token은 최소 권한 원칙에 따라 대상 계정의 Workers Scripts 편집 권한만 부여합니다. 비밀값은 워크플로 전체가 아니라 배포 단계에만 전달되며 Pull Request 검증에는 노출되지 않습니다.
 
@@ -45,7 +45,7 @@ npm run deploy
 npm run smoke:production
 ```
 
-배포 실패 시 GitHub Actions 로그에서 실패 단계를 확인합니다. 검증 단계가 실패한 커밋은 배포되지 않습니다. 배포 뒤 스모크 테스트가 실패하면 Cloudflare 대시보드의 **Workers & Pages → investlens → Deployments**에서 이전 정상 버전으로 롤백합니다. CLI에서는 대상 버전 ID를 확인한 뒤 다음처럼 실행할 수 있습니다.
+배포 실패 시 GitHub Actions 로그에서 실패 단계를 확인합니다. 검증 단계가 실패한 커밋은 배포되지 않습니다. 배포 뒤 스모크 테스트가 실패하면 Cloudflare 대시보드의 **Workers & Pages → impacticker → Deployments**에서 이전 정상 버전으로 롤백합니다. CLI에서는 대상 버전 ID를 확인한 뒤 다음처럼 실행할 수 있습니다.
 
 ```bash
 npx wrangler rollback <version-id> --message "production smoke test failed"

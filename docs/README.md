@@ -1,6 +1,6 @@
-# InvestLens 문서
+# Impacticker 문서
 
-InvestLens 프론트엔드의 서비스 개요와 구현 방식을 정리한 문서입니다.
+Impacticker 프론트엔드의 서비스 개요와 구현 방식을 정리한 문서입니다.
 
 ## 문서 목록
 
