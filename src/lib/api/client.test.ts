@@ -59,4 +59,21 @@ describe('apiClient', () => {
     await expect(apiClient.post('/portfolio', { instrumentId: 'instrument-1' })).rejects.toMatchObject({ status: 503 })
     expect(fetchMock).toHaveBeenCalledOnce()
   })
+
+  it('재시도를 끈 장기 GET은 실패해도 한 번만 요청한다', async () => {
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('', { status: 503 }))
+
+    await expect(apiClient.get('/instruments/id/news', { retries: 0 })).rejects.toMatchObject({ status: 503 })
+
+    expect(fetchMock).toHaveBeenCalledOnce()
+  })
+
+  it('빈 204 JSON 응답을 정상적인 성공으로 처리한다', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(null, {
+      status: 204,
+      headers: { 'Content-Type': 'application/json' },
+    }))
+
+    await expect(apiClient.delete('/portfolio/item-1')).resolves.toBeUndefined()
+  })
 })

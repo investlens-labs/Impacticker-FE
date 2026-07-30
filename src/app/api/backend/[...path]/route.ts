@@ -27,7 +27,7 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
       headers,
       body: request.method === 'POST' ? await request.text() : undefined,
       cache: 'no-store',
-      signal: AbortSignal.timeout(upstreamTimeout),
+      signal: AbortSignal.any([request.signal, AbortSignal.timeout(upstreamTimeout)]),
     })
     const responseHeaders = new Headers()
     const upstreamContentType = response.headers.get('content-type')
