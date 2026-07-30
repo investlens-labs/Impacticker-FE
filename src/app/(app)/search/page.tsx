@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Check, ChevronRight, Plus, Search, SlidersHorizontal } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import { useRouter } from 'next/navigation'
 import { useState, type KeyboardEvent } from 'react'
 import { InstrumentLogo, LogoAttribution } from '@/components/instrument-logo'
 import { PageHeading } from '@/components/page-heading'
@@ -11,17 +12,20 @@ import { Button } from '@/components/ui/button'
 import { ErrorNotice, ErrorState, StatusState } from '@/components/ui/status-state'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { instrumentApi, portfolioApi } from '@/lib/api/services'
-import type { Instrument, InstrumentType, Market } from '@/lib/api/types'
+import type { Instrument, InstrumentType, Market, PortfolioItem } from '@/lib/api/types'
+import { addPortfolioItem } from '@/lib/portfolio-cache'
 import { queryKeys } from '@/lib/query-keys'
 
 export default function SearchPage() {
   const t = useTranslations('search')
   const common = useTranslations('common')
+  const router = useRouter()
   const queryClient = useQueryClient()
   const [keyword, setKeyword] = useState('')
   const [market, setMarket] = useState<Market | ''>('')
   const [type, setType] = useState<InstrumentType | ''>('')
   const [activeIndex, setActiveIndex] = useState(-1)
+  const [lastAddedTicker, setLastAddedTicker] = useState<string | null>(null)
   const debouncedKeyword = useDebouncedValue(keyword.trim())
   const instruments = useQuery({
     queryKey: queryKeys.instruments(debouncedKeyword, market, type, 50),
@@ -30,7 +34,13 @@ export default function SearchPage() {
   const portfolio = useQuery({ queryKey: queryKeys.portfolio, queryFn: portfolioApi.list })
   const addMutation = useMutation({
     mutationFn: portfolioApi.add,
-    onSuccess: () => void queryClient.invalidateQueries({ queryKey: queryKeys.portfolio }),
+    onMutate: () => setLastAddedTicker(null),
+    onSuccess: (created) => {
+      queryClient.setQueryData<PortfolioItem[]>(queryKeys.portfolio, (current) => addPortfolioItem(current, created))
+      setLastAddedTicker(created.ticker)
+      void queryClient.invalidateQueries({ queryKey: queryKeys.portfolio })
+      void queryClient.invalidateQueries({ queryKey: ['news'] })
+    },
   })
   const portfolioIds = new Set(portfolio.data?.map((item) => item.instrumentId))
   const logoAttributionUrl = instruments.data?.find((item) => item.logoAttributionUrl)?.logoAttributionUrl ?? null
@@ -47,7 +57,7 @@ export default function SearchPage() {
     } else if (event.key === 'Enter' && activeIndex >= 0) {
       event.preventDefault()
       const selected = results[activeIndex]
-      if (!portfolioIds.has(selected.id) && !addMutation.isPending) addMutation.mutate({ instrumentId: selected.id })
+      router.push(`/instruments/${selected.id}`)
     } else if (event.key === 'Escape') {
       setActiveIndex(-1)
     }
@@ -60,16 +70,27 @@ export default function SearchPage() {
         <div className="relative flex-1">
           <Search aria-hidden className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
           <label htmlFor="instrument-search" className="sr-only">{t('inputLabel')}</label>
-          <input id="instrument-search" className="field pl-9" value={keyword} onChange={(event) => { setKeyword(event.target.value); setActiveIndex(-1) }} onKeyDown={handleSearchKeyDown} placeholder={t('placeholder')} autoComplete="off" aria-describedby="search-help" />
+          <input
+            id="instrument-search"
+            type="search"
+            className="field pl-9"
+            value={keyword}
+            onChange={(event) => { setKeyword(event.target.value); setActiveIndex(-1) }}
+            onKeyDown={handleSearchKeyDown}
+            placeholder={t('placeholder')}
+            autoComplete="off"
+            aria-controls="instrument-results"
+            aria-describedby="search-help search-selection"
+          />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 flex-wrap items-center gap-2 sm:flex-nowrap">
           <SlidersHorizontal className="size-4 text-slate-400" aria-hidden />
           <label htmlFor="instrument-market" className="sr-only">{t('market')}</label>
-          <select id="instrument-market" className="field min-w-28" value={market} onChange={(event) => { setMarket(event.target.value as Market | ''); setActiveIndex(-1) }}>
+          <select id="instrument-market" className="field min-w-0 flex-1 sm:min-w-28" value={market} onChange={(event) => { setMarket(event.target.value as Market | ''); setActiveIndex(-1) }}>
             <option value="">{t('allMarkets')}</option><option value="KR">{common('korea')}</option><option value="US">{common('unitedStates')}</option>
           </select>
           <label htmlFor="instrument-type" className="sr-only">{t('type')}</label>
-          <select id="instrument-type" className="field min-w-32" value={type} onChange={(event) => { setType(event.target.value as InstrumentType | ''); setActiveIndex(-1) }}>
+          <select id="instrument-type" className="field min-w-0 flex-1 sm:min-w-32" value={type} onChange={(event) => { setType(event.target.value as InstrumentType | ''); setActiveIndex(-1) }}>
             <option value="">{t('allTypes')}</option><option value="STOCK">{common('stock')}</option><option value="ETF">{common('etf')}</option>
           </select>
         </div>
@@ -84,8 +105,8 @@ export default function SearchPage() {
             <div className="grid grid-cols-[132px_minmax(0,1fr)_72px_72px_178px] border-b border-slate-200 bg-slate-50 px-4 py-2.5 text-[11px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-800 dark:bg-slate-900/70 max-sm:hidden">
               <span>{t('ticker')}</span><span>{t('company')}</span><span>{t('market')}</span><span>{t('type')}</span><span className="text-right">{t('manage')}</span>
             </div>
-            <ul className="divide-y divide-slate-100 dark:divide-slate-800">
-              {instruments.data.map((instrument, index) => <InstrumentRow key={instrument.id} instrument={instrument} exactMatch={Boolean(debouncedKeyword) && instrument.ticker.toLocaleUpperCase() === debouncedKeyword.toLocaleUpperCase()} active={activeIndex === index} added={portfolioIds.has(instrument.id)} pending={addMutation.isPending && addMutation.variables?.instrumentId === instrument.id} onFocus={() => setActiveIndex(index)} onAdd={() => addMutation.mutate({ instrumentId: instrument.id })} />)}
+            <ul id="instrument-results" aria-label={t('results')} className="divide-y divide-slate-100 dark:divide-slate-800">
+              {instruments.data.map((instrument, index) => <InstrumentRow key={instrument.id} instrument={instrument} exactMatch={Boolean(debouncedKeyword) && instrument.ticker.toLocaleUpperCase() === debouncedKeyword.toLocaleUpperCase()} active={activeIndex === index} added={portfolioIds.has(instrument.id)} pending={addMutation.isPending && addMutation.variables?.instrumentId === instrument.id} disabled={addMutation.isPending} onFocus={() => setActiveIndex(index)} onAdd={() => addMutation.mutate({ instrumentId: instrument.id })} />)}
             </ul>
             <div className="flex items-center justify-between gap-3 border-t border-slate-100 bg-slate-50/60 px-4 py-2 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900/50">
               <span>{t('total', { count: instruments.data.length })}</span>
@@ -93,22 +114,28 @@ export default function SearchPage() {
             </div>
           </div>
         )}
+      <p id="search-selection" className="sr-only" aria-live="polite">
+        {activeIndex >= 0 && instruments.data?.[activeIndex]
+          ? t('selectedResult', { ticker: instruments.data[activeIndex].ticker, companyName: instruments.data[activeIndex].companyName })
+          : ''}
+      </p>
+      <p className="sr-only" role="status" aria-live="polite">{lastAddedTicker ? t('addedSuccess', { ticker: lastAddedTicker }) : ''}</p>
       {addMutation.isError && <ErrorNotice className="fixed bottom-4 right-4 z-20 max-w-sm bg-white shadow-xl dark:bg-slate-900" error={addMutation.error} fallback={t('addFailed')} />}
     </>
   )
 }
 
-function InstrumentRow({ instrument, exactMatch, active, added, pending, onFocus, onAdd }: { instrument: Instrument; exactMatch: boolean; active: boolean; added: boolean; pending: boolean; onFocus: () => void; onAdd: () => void }) {
+function InstrumentRow({ instrument, exactMatch, active, added, pending, disabled, onFocus, onAdd }: { instrument: Instrument; exactMatch: boolean; active: boolean; added: boolean; pending: boolean; disabled: boolean; onFocus: () => void; onAdd: () => void }) {
   const t = useTranslations('search')
   return (
-    <li className={`group grid items-center gap-2 px-4 py-3 transition hover:bg-brand-50/60 sm:grid-cols-[132px_minmax(0,1fr)_72px_72px_178px] dark:hover:bg-brand-700/10 ${exactMatch ? 'bg-brand-50/70 dark:bg-brand-700/10' : active ? 'bg-slate-50 dark:bg-slate-800/50' : ''}`}>
-      <Link href={`/instruments/${instrument.id}`} className="flex items-center gap-2 rounded font-mono text-sm font-bold text-slate-950 group-hover:underline hover:text-brand-700 dark:text-white dark:hover:text-brand-100"><InstrumentLogo companyName={instrument.companyName} ticker={instrument.ticker} logoUrl={instrument.logoUrl} /><span>{instrument.ticker}</span>{exactMatch && <span className="hidden rounded bg-brand-100 px-1.5 py-0.5 font-sans text-[10px] font-bold text-brand-700 no-underline lg:inline dark:bg-brand-700/30 dark:text-brand-100">{t('exactMatch')}</span>}</Link>
-      <span className="min-w-0"><Link href={`/instruments/${instrument.id}`} className="block truncate rounded text-sm text-slate-700 group-hover:underline hover:text-brand-700 dark:text-slate-300 dark:hover:text-brand-100">{instrument.companyName}</Link><span className="mt-1 flex gap-1.5 sm:hidden"><MarketBadge market={instrument.market} /><TypeBadge type={instrument.type} /></span></span>
+    <li id={`instrument-option-${instrument.id}`} className={`group grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 px-4 py-3 transition hover:bg-brand-50/60 sm:grid-cols-[132px_minmax(0,1fr)_72px_72px_178px] sm:gap-2 dark:hover:bg-brand-700/10 ${exactMatch ? 'bg-brand-50/70 dark:bg-brand-700/10' : active ? 'bg-slate-50 dark:bg-slate-800/50' : ''}`}>
+      <Link href={`/instruments/${instrument.id}`} className="col-start-1 row-start-1 flex min-w-0 items-center gap-2 rounded font-mono text-sm font-bold text-slate-950 group-hover:underline hover:text-brand-700 sm:col-auto sm:row-auto dark:text-white dark:hover:text-brand-100"><InstrumentLogo companyName={instrument.companyName} ticker={instrument.ticker} logoUrl={instrument.logoUrl} /><span className="truncate">{instrument.ticker}</span>{exactMatch && <span className="hidden rounded bg-brand-100 px-1.5 py-0.5 font-sans text-[10px] font-bold text-brand-700 no-underline lg:inline dark:bg-brand-700/30 dark:text-brand-100">{t('exactMatch')}</span>}</Link>
+      <span className="col-start-1 row-start-2 min-w-0 sm:col-auto sm:row-auto"><Link href={`/instruments/${instrument.id}`} className="block truncate rounded text-sm text-slate-700 group-hover:underline hover:text-brand-700 dark:text-slate-300 dark:hover:text-brand-100">{instrument.companyName}</Link><span className="mt-1 flex gap-1.5 sm:hidden"><MarketBadge market={instrument.market} /><TypeBadge type={instrument.type} /></span></span>
       <MarketBadge market={instrument.market} className="max-sm:hidden" />
       <TypeBadge type={instrument.type} className="max-sm:hidden" />
-      <span className="flex items-center gap-1.5 justify-self-start sm:justify-self-end">
+      <span className="col-start-2 row-span-2 row-start-1 flex items-center gap-1 justify-self-end sm:col-auto sm:row-auto sm:gap-1.5">
         <Link href={`/instruments/${instrument.id}`} className="inline-flex h-10 items-center gap-1 rounded-lg px-2.5 text-xs font-semibold text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white">{t('details')}<ChevronRight className="size-3.5" /></Link>
-        <Button variant={added ? 'ghost' : 'secondary'} icon={added ? Check : Plus} disabled={added} loading={pending} onFocus={onFocus} onClick={onAdd}>{added ? t('added') : t('add')}</Button>
+        <Button variant={added ? 'ghost' : 'secondary'} icon={added ? Check : Plus} disabled={added || disabled} loading={pending} onFocus={onFocus} onClick={onAdd}>{added ? t('added') : t('add')}</Button>
       </span>
     </li>
   )

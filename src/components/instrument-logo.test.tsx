@@ -8,7 +8,10 @@ describe('InstrumentLogo', () => {
     const logoUrl = 'https://img.logo.dev/ticker/AAPL?token=publishable'
     renderWithIntl(<InstrumentLogo companyName="Apple Inc." logoUrl={logoUrl} />, { locale: 'ko' })
 
-    expect(screen.getByRole('img', { name: 'Apple Inc. 로고' })).toHaveAttribute('src', logoUrl)
+    const image = screen.getByRole('img', { name: 'Apple Inc. 로고' })
+    expect(image).toHaveAttribute('src', logoUrl)
+    expect(image).toHaveAttribute('loading', 'lazy')
+    expect(image).toHaveAttribute('decoding', 'async')
   })
 
   it('이미지 로딩에 실패하면 종목명 첫 글자를 표시한다', () => {
