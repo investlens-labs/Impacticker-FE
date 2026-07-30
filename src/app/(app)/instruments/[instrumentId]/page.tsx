@@ -13,6 +13,8 @@ import { InstrumentNews } from '@/components/instrument-news'
 import { ScrollToNewsButton } from '@/components/scroll-to-news-button'
 import { ApiError } from '@/lib/api/client'
 import { instrumentApi, portfolioApi } from '@/lib/api/services'
+import type { PortfolioItem } from '@/lib/api/types'
+import { addPortfolioItem, removePortfolioItem } from '@/lib/portfolio-cache'
 import { queryKeys } from '@/lib/query-keys'
 
 export default function InstrumentDetailPage() {
@@ -32,9 +34,18 @@ export default function InstrumentDetailPage() {
   }
   const addMutation = useMutation({
     mutationFn: portfolioApi.add,
-    onSuccess: refreshPortfolioData,
+    onSuccess: (created) => {
+      queryClient.setQueryData<PortfolioItem[]>(queryKeys.portfolio, (current) => addPortfolioItem(current, created))
+      refreshPortfolioData()
+    },
   })
-  const removeMutation = useMutation({ mutationFn: portfolioApi.remove, onSuccess: refreshPortfolioData })
+  const removeMutation = useMutation({
+    mutationFn: portfolioApi.remove,
+    onSuccess: (_, removedId) => {
+      queryClient.setQueryData<PortfolioItem[]>(queryKeys.portfolio, (current) => removePortfolioItem(current, removedId))
+      refreshPortfolioData()
+    },
+  })
 
   if (instrument.isLoading) return <LoadingState label={t('loading')} />
   if (instrument.error instanceof ApiError && instrument.error.status === 404) {
@@ -78,7 +89,13 @@ export default function InstrumentDetailPage() {
         <aside className="surface p-4 lg:sticky lg:top-20">
           <h2 className="text-sm font-semibold text-slate-950 dark:text-white">{t('portfolio')}</h2>
           <p className="mt-1 text-xs leading-5 text-slate-500">{t('portfolioDescription')}</p>
-          <Button className="mt-4 w-full" variant={isAdded ? 'danger' : 'primary'} icon={isAdded ? Trash2 : Plus} disabled={portfolio.isLoading || portfolioPending} loading={portfolioPending} onClick={() => portfolioItem ? removeMutation.mutate(portfolioItem.id) : addMutation.mutate({ instrumentId: data.id })}>{isAdded ? t('remove') : t('add')}</Button>
+          <Button className="mt-4 w-full" variant={isAdded ? 'danger' : 'primary'} icon={isAdded ? Trash2 : Plus} disabled={portfolio.isLoading || portfolioPending} loading={portfolioPending} onClick={() => {
+            if (!portfolioItem) {
+              addMutation.mutate({ instrumentId: data.id })
+              return
+            }
+            if (window.confirm(t('removeConfirm', { ticker: data.ticker }))) removeMutation.mutate(portfolioItem.id)
+          }}>{isAdded ? t('remove') : t('add')}</Button>
           {addMutation.isError && <ErrorNotice className="mt-2 text-xs" error={addMutation.error} fallback={t('portfolioFailed')} />}
           {removeMutation.isError && <ErrorNotice className="mt-2 text-xs" error={removeMutation.error} fallback={t('portfolioFailed')} />}
           <Link href="/dashboard" className="mt-2 inline-flex h-9 w-full items-center justify-center rounded-lg text-xs font-semibold text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-700/10">{t('viewPersonalizedNews')}</Link>

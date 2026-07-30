@@ -40,7 +40,10 @@ export const instrumentApi = {
   chart: (instrumentId: string, range: ChartRange) =>
     apiClient.get<InstrumentChart>(`/instruments/${instrumentId}/chart${toQuery({ range })}`),
   news: (instrumentId: string, { language = 'ko', page = 0, size = 20 }: InstrumentNewsParams = {}) =>
-    apiClient.get<PageResponse<FeedItem>>(`/instruments/${instrumentId}/news${toQuery({ language, page, size })}`, { timeoutMs: 160_000 }),
+    apiClient.get<PageResponse<FeedItem>>(`/instruments/${instrumentId}/news${toQuery({ language, page, size })}`, {
+      timeoutMs: 155_000,
+      retries: 0,
+    }),
   sentiment: (instrumentId: string) =>
     apiClient.get<InstrumentNewsSentiment>(`/instruments/${instrumentId}/news/sentiment`),
 }

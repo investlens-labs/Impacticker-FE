@@ -30,7 +30,7 @@ export default function DashboardPage() {
         </Link>
       </section>
       <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
-        <NewsFeed />
+        <NewsFeed portfolioEmpty={portfolio.isSuccess && !portfolio.data?.length} />
         <div className="grid gap-4 xl:sticky xl:top-20">
           <aside className="surface overflow-hidden">
             <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3 dark:border-slate-800">

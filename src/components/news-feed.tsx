@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { ChevronLeft, ChevronRight, SlidersHorizontal } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { ErrorState, StatusState } from '@/components/ui/status-state'
 import { NewsSkeleton } from '@/components/ui/skeleton'
@@ -19,11 +20,19 @@ const directions = [
 ] as const satisfies ReadonlyArray<{ value: ImpactDirection | ''; labelKey: 'allDirections' | 'positive' | 'neutral' | 'negative'; marker: string }>
 
 export const impactScoreOptions = Array.from({ length: 10 }, (_, index) => 10 - index)
+export type EmptyNewsVariant = 'portfolio' | 'filtered' | 'default'
 
-export function NewsFeed({ initialSize = 10 }: { initialSize?: number }) {
+export function getEmptyNewsVariant(portfolioEmpty: boolean, direction: ImpactDirection | '', minScore: number | ''): EmptyNewsVariant {
+  if (portfolioEmpty) return 'portfolio'
+  if (direction || minScore) return 'filtered'
+  return 'default'
+}
+
+export function NewsFeed({ initialSize = 10, portfolioEmpty = false }: { initialSize?: number; portfolioEmpty?: boolean }) {
   const t = useTranslations('news')
   const common = useTranslations('common')
   const locale = useLocale()
+  const router = useRouter()
   const [direction, setDirection] = useState<ImpactDirection | ''>('')
   const [minScore, setMinScore] = useState<number | ''>('')
   const [page, setPage] = useState(0)
@@ -32,6 +41,12 @@ export function NewsFeed({ initialSize = 10 }: { initialSize?: number }) {
 
   const updateDirection = (value: ImpactDirection | '') => { setDirection(value); setPage(0) }
   const updateScore = (value: number | '') => { setMinScore(value); setPage(0) }
+  const emptyVariant = getEmptyNewsVariant(portfolioEmpty, direction, minScore)
+  const resetFilters = () => {
+    setDirection('')
+    setMinScore('')
+    setPage(0)
+  }
 
   return (
     <section aria-labelledby="news-feed-title">
@@ -56,7 +71,11 @@ export function NewsFeed({ initialSize = 10 }: { initialSize?: number }) {
 
       {query.isLoading ? <div className="grid gap-3"><NewsSkeleton /><NewsSkeleton /><NewsSkeleton /></div>
         : query.isError ? <ErrorState error={query.error} retrying={query.isFetching} onRetry={() => void query.refetch()} />
-        : !query.data?.content.length ? <StatusState title={t('emptyTitle')} description={t('emptyDescription')} />
+        : !query.data?.content.length ? emptyVariant === 'portfolio'
+          ? <StatusState title={t('portfolioEmptyTitle')} description={t('portfolioEmptyDescription')} actionLabel={t('addFirstInstrument')} onAction={() => router.push('/search')} />
+          : emptyVariant === 'filtered'
+            ? <StatusState title={t('emptyTitle')} description={t('filteredEmptyDescription')} actionLabel={t('resetFilters')} onAction={resetFilters} />
+            : <StatusState title={t('emptyTitle')} description={t('emptyDescription')} />
         : (
           <>
             <div className="grid gap-3">{query.data.content.map((news) => <NewsCard key={news.id} news={news} />)}</div>

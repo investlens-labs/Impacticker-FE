@@ -30,7 +30,10 @@ describe('instrumentApi', () => {
 
     await instrumentApi.news('instrument-uuid', { language: 'ja', page: 2, size: 20 })
 
-    expect(get).toHaveBeenCalledWith('/instruments/instrument-uuid/news?language=ja&page=2&size=20', { timeoutMs: 160_000 })
+    expect(get).toHaveBeenCalledWith('/instruments/instrument-uuid/news?language=ja&page=2&size=20', {
+      timeoutMs: 155_000,
+      retries: 0,
+    })
   })
 
   it('종목 ID로 관련 뉴스 AI 집계 경로를 생성한다', async () => {

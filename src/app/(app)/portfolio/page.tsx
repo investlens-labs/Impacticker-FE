@@ -4,21 +4,26 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { LoaderCircle, Plus, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useFormatter, useTranslations } from 'next-intl'
+import { useRouter } from 'next/navigation'
 import { PageHeading } from '@/components/page-heading'
 import { Button } from '@/components/ui/button'
 import { ErrorNotice, ErrorState, LoadingState, StatusState } from '@/components/ui/status-state'
 import { portfolioApi } from '@/lib/api/services'
+import type { PortfolioItem } from '@/lib/api/types'
+import { removePortfolioItem } from '@/lib/portfolio-cache'
 import { queryKeys } from '@/lib/query-keys'
 
 export default function PortfolioPage() {
   const t = useTranslations('portfolio')
   const common = useTranslations('common')
   const format = useFormatter()
+  const router = useRouter()
   const queryClient = useQueryClient()
   const portfolio = useQuery({ queryKey: queryKeys.portfolio, queryFn: portfolioApi.list })
   const removeMutation = useMutation({
     mutationFn: portfolioApi.remove,
-    onSuccess: () => {
+    onSuccess: (_, removedId) => {
+      queryClient.setQueryData<PortfolioItem[]>(queryKeys.portfolio, (current) => removePortfolioItem(current, removedId))
       void queryClient.invalidateQueries({ queryKey: queryKeys.portfolio })
       void queryClient.invalidateQueries({ queryKey: ['news'] })
     },
@@ -29,7 +34,7 @@ export default function PortfolioPage() {
       <PageHeading eyebrow={t('eyebrow')} title={t('title')} description={t('description')} action={<Link href="/search"><Button icon={Plus}>{t('addInstrument')}</Button></Link>} />
       {portfolio.isLoading ? <LoadingState label={t('loading')} />
         : portfolio.isError ? <ErrorState error={portfolio.error} retrying={portfolio.isFetching} onRetry={() => void portfolio.refetch()} />
-        : !portfolio.data?.length ? <StatusState title={t('emptyTitle')} description={t('emptyDescription')} actionLabel={t('addFirst')} onAction={() => { window.location.href = '/search' }} />
+        : !portfolio.data?.length ? <StatusState title={t('emptyTitle')} description={t('emptyDescription')} actionLabel={t('addFirst')} onAction={() => router.push('/search')} />
         : (
           <div className="surface overflow-hidden">
             <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-800 dark:bg-slate-900/60"><span className="text-sm font-semibold text-slate-800 dark:text-slate-200">{t('registered')}</span><span className="text-xs text-slate-500">{common('items', { count: portfolio.data.length })}</span></div>
@@ -48,7 +53,9 @@ export default function PortfolioPage() {
                     ticker={item.ticker}
                     pending={removeMutation.isPending && removeMutation.variables === item.id}
                     disabled={removeMutation.isPending}
-                    onClick={() => removeMutation.mutate(item.id)}
+                    onClick={() => {
+                      if (window.confirm(t('deleteConfirm', { ticker: item.ticker }))) removeMutation.mutate(item.id)
+                    }}
                   />
                 </li>
               ))}

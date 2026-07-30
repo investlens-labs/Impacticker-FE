@@ -18,6 +18,7 @@ interface RequestOptions extends Omit<RequestInit, 'body'> {
   body?: unknown
   auth?: boolean
   timeoutMs?: number
+  retries?: number
 }
 
 const wait = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms))
@@ -30,19 +31,25 @@ const extractMessage = (data: unknown, fallback: string) => {
 }
 
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const { auth = true, timeoutMs = 45_000, body, ...init } = options
+  const { auth = true, timeoutMs = 45_000, retries, body, ...init } = options
   const method = (init.method ?? 'GET').toUpperCase()
-  const maxAttempts = method === 'GET' ? RETRY_DELAYS.length + 1 : 1
+  const retryCount = method === 'GET'
+    ? Math.max(0, Math.min(retries ?? RETRY_DELAYS.length, RETRY_DELAYS.length))
+    : 0
+  const maxAttempts = retryCount + 1
 
   for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
     const controller = new AbortController()
     const timer = window.setTimeout(() => controller.abort(), timeoutMs)
     const token = auth ? tokenStorage.get() : null
+    const signal = init.signal
+      ? AbortSignal.any([controller.signal, init.signal])
+      : controller.signal
 
     try {
       const response = await fetch(`${API_BASE_URL}${path}`, {
         ...init,
-        signal: controller.signal,
+        signal,
         headers: {
           Accept: 'application/json',
           ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
@@ -53,7 +60,9 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
       })
 
       const contentType = response.headers.get('content-type') ?? ''
-      const data = contentType.includes('json') ? await response.json() : await response.text()
+      const bodyless = response.status === 204 || response.status === 205
+      const rawBody = bodyless ? '' : await response.text()
+      const data = bodyless ? undefined : contentType.includes('json') && rawBody ? JSON.parse(rawBody) : rawBody
 
       if (response.status === 401 && auth) {
         tokenStorage.clear()

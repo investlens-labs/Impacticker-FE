@@ -35,6 +35,8 @@ export function InstrumentLogo({ companyName, logoUrl, size = 32, ticker }: Inst
           alt={t('logoAlt', { companyName })}
           width={size}
           height={size}
+          loading={size === 32 ? 'lazy' : 'eager'}
+          decoding="async"
           className="size-full object-contain p-1"
           onError={() => setFailedUrl(logoUrl)}
         />
