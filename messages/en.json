@@ -57,6 +57,41 @@
       "personalizationContent": "Impacticker does not use portfolio data for advertising targeting and requests non-personalized Google ads by default."
     }
   },
+  "publicInfo": {
+    "eyebrow": "About Impacticker",
+    "updated": "Last updated",
+    "backHome": "Back to home",
+    "aboutLink": "About",
+    "methodologyLink": "Methodology",
+    "about": {
+      "title": "About Impacticker",
+      "description": "An investment news service that finds news related to your watchlist and presents AI analysis clearly.",
+      "purposeTitle": "What it solves",
+      "purposeContent": "Impacticker reduces time spent checking multiple publications by bringing portfolio news, impact direction, score, and reasoning into one view.",
+      "coverageTitle": "Coverage",
+      "coverageContent": "It supports Korean and U.S. stocks and ETFs, portfolio management, price charts, personalized news feeds, and related article analysis.",
+      "flowTitle": "How data is handled",
+      "flowContent": "The frontend requests instrument, market, and news data through the Impacticker backend. Collection, normalization, and error handling occur on the backend rather than by calling external providers from the browser.",
+      "limitsTitle": "Service limitations",
+      "limitsContent": "Information may be delayed or unavailable depending on collection timing, external providers, and AI availability. It is reference information, not investment advice or guaranteed returns."
+    },
+    "methodology": {
+      "title": "News impact methodology",
+      "description": "How article direction, a 1–10 impact score, and possible short-term market reactions are presented.",
+      "directionTitle": "Impact direction",
+      "directionContent": "Positive, neutral, and negative describe how article evidence may affect operations, demand, costs, supply chains, regulation, or market conditions. They do not determine the actual stock-price direction.",
+      "scoreTitle": "1–10 impact score",
+      "scoreContent": "A score of 1 indicates a passing mention with little impact, 5 a meaningful medium-level effect, and 10 an event that could have a very large and immediate company-wide effect.",
+      "probabilityTitle": "Up, down, and neutral probabilities",
+      "probabilityContent": "The values form a relative distribution of possible short-term market reactions and total 100. They are not forecasts of a price-change percentage or target price.",
+      "analysisTitle": "AI analysis status",
+      "analysisContent": "Only items with aiAnalyzed set to true are presented as actual AI analysis. A false value is shown as analysis unavailable and is never treated as a real 0% result.",
+      "evidenceTitle": "Scope and evidence",
+      "evidenceContent": "Analysis may include direct news and evidence-based indirect effects involving industries, competitors, supply chains, customers, regulation, interest rates, and exchange rates. Reasons and original links are provided.",
+      "disclaimerTitle": "Investment notice",
+      "disclaimerContent": "The analysis is an AI-assisted summary of recent articles, not investment advice, a buy or sell recommendation, or a stock-price forecast. Users remain responsible for their decisions."
+    }
+  },
   "metadata": {
     "homeTitle": "Impacticker | AI Investment News Impact Analysis",
     "description": "Analyze key news for South Korean and U.S. stocks and ETFs, then review portfolio-specific impact direction and scores from 1 to 10.",

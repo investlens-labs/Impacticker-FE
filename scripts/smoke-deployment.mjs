@@ -19,13 +19,15 @@ const createRequestUrl = (path = new URL(targetUrl).pathname) => {
 };
 
 async function verifyDeployment() {
+  const origin = new URL(targetUrl).origin;
+  const canonicalOrigin = process.env.SMOKE_CANONICAL_ORIGIN?.trim() || origin;
   const homeResponse = await fetch(createRequestUrl(), createRequestOptions());
   const homeBody = await homeResponse.text();
   const homeReady = homeResponse.ok
     && homeBody.includes("Impacticker")
     && homeBody.includes("<h1")
     && homeBody.includes("application/ld+json")
-    && homeBody.includes('rel="canonical"');
+    && homeBody.includes(`href="${canonicalOrigin}"`);
 
   if (!homeReady) {
     return { ok: false, message: `${homeResponse.status} ${homeResponse.url}, expected SEO-ready Impacticker HTML` };
@@ -43,7 +45,7 @@ async function verifyDeployment() {
 
   const textChecks = [
     ["/robots.txt", ["User-Agent: *", "Sitemap:"]],
-    ["/sitemap.xml", ["<urlset", new URL(targetUrl).origin]],
+    ["/sitemap.xml", ["<urlset", canonicalOrigin, `${canonicalOrigin}/about`, `${canonicalOrigin}/methodology`, "<lastmod>"]],
     ["/manifest.webmanifest", ['"name":"Impacticker"', '"start_url":"/"']],
   ];
 
@@ -58,6 +60,25 @@ async function verifyDeployment() {
   const imageResponse = await fetch(createRequestUrl("/opengraph-image"), createRequestOptions());
   if (!imageResponse.ok || !imageResponse.headers.get("content-type")?.startsWith("image/png")) {
     return { ok: false, message: `${imageResponse.status} /opengraph-image, expected image/png` };
+  }
+
+  for (const path of ["/about", "/methodology"]) {
+    const response = await fetch(createRequestUrl(path), createRequestOptions());
+    const body = await response.text();
+    const canonical = path === "/about" ? `${canonicalOrigin}/about` : `${canonicalOrigin}/methodology`;
+
+    if (!response.ok || !body.includes("<h1") || !body.includes(`href="${canonical}"`)) {
+      return { ok: false, message: `${response.status} ${path}, expected indexable public content` };
+    }
+  }
+
+  for (const path of ["/login", "/dashboard"]) {
+    const response = await fetch(createRequestUrl(path), createRequestOptions());
+    const body = await response.text();
+
+    if (!response.ok || !body.includes('name="robots"') || !body.includes("noindex")) {
+      return { ok: false, message: `${response.status} ${path}, expected noindex metadata` };
+    }
   }
 
   return { ok: true, message: `${homeResponse.status} ${homeResponse.url}` };

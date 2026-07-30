@@ -57,6 +57,41 @@
       "personalizationContent": "Impactickerはポートフォリオデータを広告ターゲティングに使用せず、Google広告にはデフォルトで非パーソナライズ広告をリクエストします。"
     }
   },
+  "publicInfo": {
+    "eyebrow": "Impactickerについて",
+    "updated": "最終更新",
+    "backHome": "ホームに戻る",
+    "aboutLink": "サービス紹介",
+    "methodologyLink": "分析基準",
+    "about": {
+      "title": "Impacticker サービス紹介",
+      "description": "関心銘柄のニュースを見つけ、AI分析結果を分かりやすく整理する投資ニュース情報サービスです。",
+      "purposeTitle": "解決すること",
+      "purposeContent": "複数メディアを確認する時間を減らせるよう、ポートフォリオ銘柄のニュース、影響方向、影響度、評価理由を一つの画面にまとめます。",
+      "coverageTitle": "対応範囲",
+      "coverageContent": "韓国・米国市場の株式とETF検索、ポートフォリオ管理、価格チャート、パーソナライズニュース、関連記事分析に対応します。",
+      "flowTitle": "データ処理",
+      "flowContent": "フロントエンドはImpactickerバックエンドから銘柄、価格、ニュースを取得します。外部提供元をブラウザから直接呼ばず、収集、正規化、エラー処理はバックエンドが担当します。",
+      "limitsTitle": "サービスの限界",
+      "limitsContent": "収集時点、外部データ提供状況、AIの利用可否により情報が遅延または欠落する場合があります。提供情報は参考資料であり、投資助言や利益保証ではありません。"
+    },
+    "methodology": {
+      "title": "ニュース影響分析の基準",
+      "description": "記事ごとの影響方向、1〜10点の影響度、短期反応の可能性を表示する方法です。",
+      "directionTitle": "影響方向",
+      "directionContent": "ポジティブ、中立、ネガティブは、記事の根拠が事業、需要、コスト、供給網、規制、市場環境に与え得る方向を表し、実際の株価方向を断定しません。",
+      "scoreTitle": "1〜10点の影響度",
+      "scoreContent": "1点は影響がほぼない言及、5点は意味のある中程度の影響、10点は企業全体に非常に大きく即時的な影響を与える可能性がある出来事です。",
+      "probabilityTitle": "上昇・下落・中立の可能性",
+      "probabilityContent": "3つの確率は短期的な市場反応の相対分布で合計は100です。株価変動率や目標価格の予測ではありません。",
+      "analysisTitle": "AI分析の状態",
+      "analysisContent": "aiAnalyzedがtrueの項目だけを実際のAI分析として表示します。falseは0%と解釈せず、AI分析データがない状態として案内します。",
+      "evidenceTitle": "評価範囲と根拠",
+      "evidenceContent": "直接ニュースに加え、根拠がある産業、競合、供給網、顧客、規制、金利、為替の間接影響も評価できます。理由と原文リンクを併記します。",
+      "disclaimerTitle": "投資上の注意",
+      "disclaimerContent": "分析は最近の記事をAIで整理した参考情報です。投資助言、売買推奨、株価予測ではなく、投資判断と結果の責任は利用者にあります。"
+    }
+  },
   "metadata": {
     "homeTitle": "Impacticker | AI投資ニュース影響分析",
     "description": "韓国・米国の株式とETFの主要ニュースをポートフォリオに合わせて分析し、影響方向と1～10点のスコアを確認できます。",

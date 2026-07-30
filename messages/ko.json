@@ -57,6 +57,41 @@
       "personalizationContent": "Impacticker는 포트폴리오 데이터를 광고 타기팅에 사용하지 않으며 Google 광고는 비개인화 요청을 기본값으로 사용합니다."
     }
   },
+  "publicInfo": {
+    "eyebrow": "Impacticker 안내",
+    "updated": "최종 업데이트",
+    "backHome": "홈으로 돌아가기",
+    "aboutLink": "서비스 소개",
+    "methodologyLink": "분석 기준",
+    "about": {
+      "title": "Impacticker 서비스 소개",
+      "description": "관심 종목과 관련된 뉴스를 찾고 AI 분석 결과를 이해하기 쉽게 정리하는 투자 뉴스 정보 서비스입니다.",
+      "purposeTitle": "무엇을 해결하나요",
+      "purposeContent": "여러 매체를 반복해서 확인하는 시간을 줄이도록 포트폴리오 종목의 뉴스, 영향 방향, 영향도와 평가 이유를 한 화면에 모읍니다.",
+      "coverageTitle": "지원 범위",
+      "coverageContent": "한국과 미국 시장의 주식 및 ETF 검색, 포트폴리오 관리, 종목별 가격 차트, 맞춤 뉴스 피드와 관련 기사 분석을 지원합니다.",
+      "flowTitle": "데이터 처리 방식",
+      "flowContent": "프론트엔드는 Impacticker 백엔드를 통해 종목, 시세와 뉴스 데이터를 요청합니다. 외부 제공처를 브라우저에서 직접 호출하지 않으며 백엔드가 수집, 정규화와 오류 처리를 담당합니다.",
+      "limitsTitle": "서비스의 한계",
+      "limitsContent": "뉴스 수집 시점, 외부 데이터 제공 상태와 AI 분석 가능 여부에 따라 정보가 지연되거나 누락될 수 있습니다. 제공 정보는 투자 참고 자료이며 매매 권유나 수익 보장이 아닙니다."
+    },
+    "methodology": {
+      "title": "뉴스 영향 분석 기준",
+      "description": "기사별 영향 방향, 1–10점 영향도와 단기 반응 가능성을 표시하는 방식을 설명합니다.",
+      "directionTitle": "영향 방향",
+      "directionContent": "긍정, 중립, 부정은 기사의 근거가 사업, 수요, 비용, 공급망, 규제 또는 시장 환경에 미칠 수 있는 방향을 뜻하며 실제 주가 방향을 단정하지 않습니다.",
+      "scoreTitle": "1–10점 영향도",
+      "scoreContent": "1점은 영향이 거의 없는 단순 언급, 5점은 의미 있는 중간 수준 영향, 10점은 기업 전체에 매우 크고 즉각적인 영향을 줄 가능성이 있는 사건을 뜻합니다.",
+      "probabilityTitle": "상승·하락·중립 가능성",
+      "probabilityContent": "세 확률은 해당 뉴스가 단기 시장 반응을 유발할 가능성의 상대적 분포이며 합계는 100입니다. 주가 등락률이나 목표 가격의 예측값이 아닙니다.",
+      "analysisTitle": "AI 분석 여부",
+      "analysisContent": "aiAnalyzed가 true인 항목만 실제 AI 분석 결과로 표시합니다. false이면 0%로 해석하지 않고 AI 분석 데이터가 준비되지 않은 상태로 안내합니다.",
+      "evidenceTitle": "평가 범위와 근거",
+      "evidenceContent": "종목 직접 뉴스뿐 아니라 기사에 근거가 있는 산업, 경쟁사, 공급망, 고객사, 규제, 금리와 환율의 간접 영향도 평가할 수 있습니다. 평가 이유와 원문 링크를 함께 제공합니다.",
+      "disclaimerTitle": "투자 유의사항",
+      "disclaimerContent": "분석은 최근 기사에 대한 AI 기반 정보 정리이며 투자 조언, 매수·매도 추천 또는 주가 예측이 아닙니다. 투자 판단과 결과의 책임은 사용자에게 있습니다."
+    }
+  },
   "metadata": {
     "homeTitle": "Impacticker | AI 투자 뉴스 영향 분석",
     "description": "한국·미국 주식과 ETF의 주요 뉴스를 포트폴리오에 맞춰 분석하고, 영향 방향과 1–10점 점수를 한눈에 확인하세요.",
