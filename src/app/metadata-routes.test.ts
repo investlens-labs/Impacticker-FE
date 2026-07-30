@@ -12,12 +12,18 @@ describe('metadata routes', () => {
     expect(result.sitemap).toMatch(/^https:\/\/.*\/sitemap\.xml$/)
   })
 
-  it('공개 랜딩과 정책 페이지를 sitemap에 포함한다', () => {
+  it('공개 랜딩, 서비스 안내와 정책 페이지를 sitemap에 포함한다', () => {
     const result = sitemap()
 
-    expect(result).toHaveLength(3)
-    expect(result[0]).toMatchObject({ url: expect.stringMatching(/^https:\/\/.*\/$/), priority: 1 })
+    expect(result).toHaveLength(5)
+    expect(result[0]).toMatchObject({
+      url: expect.stringMatching(/^https:\/\/.*\/$/),
+      priority: 1,
+      lastModified: expect.any(Date),
+    })
     expect(result.map(({ url }) => url)).toEqual(expect.arrayContaining([
+      expect.stringMatching(/\/about$/),
+      expect.stringMatching(/\/methodology$/),
       expect.stringMatching(/\/privacy$/),
       expect.stringMatching(/\/advertising-policy$/),
     ]))

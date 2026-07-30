@@ -7,6 +7,8 @@ Impacticker의 기술 SEO는 검색엔진이 공개 서비스 소개를 정확�
 | 경로 | 정책 | 이유 |
 |---|---|---|
 | `/` | `index, follow` | 서버에서 렌더링되는 공개 서비스 소개 |
+| `/about`, `/methodology` | `index, follow` | 서비스 범위와 AI 뉴스 영향 분석 기준을 설명하는 공개 신뢰 콘텐츠 |
+| `/privacy`, `/advertising-policy` | `index, follow` | 개인정보·쿠키 및 광고 운영 원칙 |
 | `/login`, `/signup` | `noindex, follow` | 검색 결과로 제공할 핵심 콘텐츠가 아닌 인증 화면 |
 | `/dashboard`, `/search`, `/portfolio` | `noindex, nofollow` | JWT 인증과 사용자 데이터에 기반한 개인화 화면 |
 | `/instruments/*`, `/news/*` | `noindex, nofollow` | 인증 후 클라이언트에서 불러오는 종목·뉴스 데이터 |
@@ -21,6 +23,7 @@ Impacticker의 기술 SEO는 검색엔진이 공개 서비스 소개를 정확�
 - Open Graph 및 Twitter large image
 - `WebSite`, `Organization`, `WebApplication` JSON-LD
 - `/robots.txt`, `/sitemap.xml`, `/manifest.webmanifest`
+- 공개 서비스 소개, 분석 기준, 개인정보와 광고 운영 정책
 - Google 및 Naver 사이트 소유권 확인 meta 환경변수
 - 개인화 화면의 `noindex`
 
@@ -55,8 +58,8 @@ curl https://impacticker.mandoo4137-a53.workers.dev/manifest.webmanifest
 
 운영 배포 후 다음 외부 도구에서 확인합니다.
 
-1. Google Search Console에서 사이트 소유권 확인
-2. `sitemap.xml` 제출 및 URL 검사
+1. Google Search Console에서 `https://impacticker.mandoo4137-a53.workers.dev/` 속성 소유권 확인
+2. `sitemap.xml` 제출 및 `/`, `/about`, `/methodology` URL 검사
 3. Google Rich Results Test에서 JSON-LD 구문 확인
 4. Naver Search Advisor에서 사이트 소유권 확인 및 sitemap 제출
 5. 색인, 크롤링 오류, 수동 조치와 Core Web Vitals를 정기적으로 점검

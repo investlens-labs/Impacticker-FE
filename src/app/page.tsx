@@ -50,6 +50,7 @@ export default async function HomePage() {
   const landing = await getTranslations('landing')
   const metadata = await getTranslations('metadata')
   const ads = await getTranslations('ads')
+  const publicInfo = await getTranslations('publicInfo')
   const localeText = await getTranslations('locale')
   const locale = await getLocale() as AppLocale
   const structuredData = buildStructuredData(metadata('description'), intlLocale[locale])
@@ -182,7 +183,11 @@ export default async function HomePage() {
 
       <footer className="border-t border-slate-200 px-5 py-6 text-center text-xs leading-5 text-slate-500 dark:border-slate-800">
         <p className="inline-flex items-center gap-1.5"><BriefcaseBusiness className="size-3.5" />{auth('disclaimer')}</p>
-        <nav className="mt-2 flex items-center justify-center gap-3">
+        <nav className="mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+          <Link href="/about" className="hover:text-slate-800 hover:underline dark:hover:text-slate-200">{publicInfo('aboutLink')}</Link>
+          <span aria-hidden>·</span>
+          <Link href="/methodology" className="hover:text-slate-800 hover:underline dark:hover:text-slate-200">{publicInfo('methodologyLink')}</Link>
+          <span aria-hidden>·</span>
           <Link href="/privacy" className="hover:text-slate-800 hover:underline dark:hover:text-slate-200">{ads('privacy')}</Link>
           <span aria-hidden>·</span>
           <Link href="/advertising-policy" className="hover:text-slate-800 hover:underline dark:hover:text-slate-200">{ads('policy')}</Link>
