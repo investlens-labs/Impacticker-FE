@@ -173,3 +173,24 @@ Issue 생성 → 작업 브랜치 → 구현·검증 → 논리 커밋 → Pull 
 - 관련 없는 변경이나 충돌이 없음
 - 작업 Issue, Pull Request, 커밋과 병합 결과가 확인됨
 - 최종 보고에 Issue/PR 링크, 변경 파일, 검증 결과, 커밋 해시, 남은 위험이 포함됨
+
+## 11. 완전 자동화 실행 계약
+
+- 사용자의 요구가 명확하면 분석, 구현, 검증, Issue, 브랜치, 커밋, PR, 병합, 배포를 중간 승인 없이 연속 수행합니다.
+- 커밋, 푸시, PR 생성, CI 확인, 정상적인 PR 병합, Cloudflare 배포는 이미 요청된 기본 작업으로 취급합니다.
+- 이미 구성된 GitHub 및 Cloudflare 인증을 사용하되, 비밀값을 출력하거나 저장소에 기록하지 않습니다.
+- 자격증명이 없거나 외부 서비스 권한이 거부된 경우에만 정확한 차단 지점과 재개 조건을 보고합니다.
+- 복구 가능한 실패는 로그를 읽고 수정한 뒤 동일 검증을 다시 수행합니다. 첫 실패에서 사용자에게 작업을 넘기지 않습니다.
+- 운영 배포는 `master` 병합 후 CI가 수행하도록 하며, 워크플로 성공과 운영 smoke test까지 확인합니다.
+- destructive database 변경, 결제, 도메인 구매처럼 비용 또는 데이터 손실이 발생하는 작업은 사용자의 명시적 요청 범위 안에서만 수행합니다.
+
+## 12. 프로젝트 프롬프트 사용
+
+- 전체 작업용 마스터 프롬프트: `.codex/prompts/impacticker-master.md`
+- API 계약 담당: `.codex/prompts/impacticker-api.md`
+- 제품 UI 담당: `.codex/prompts/impacticker-ui.md`
+- QA·보안 담당: `.codex/prompts/impacticker-qa.md`
+- 릴리스 담당: `.codex/prompts/impacticker-release.md`
+- 사용법과 역할 조합: `docs/codex-prompt-guide.md`
+
+역할 프롬프트는 이 문서를 대체하지 않습니다. 모든 역할은 이 `AGENTS.md` 아래에서 동작하며, 리더가 범위와 파일 소유권을 지정했을 때만 해당 작업을 수행합니다.
